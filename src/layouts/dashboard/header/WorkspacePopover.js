@@ -47,7 +47,7 @@ export default function WorkspacePopover() {
               // variant="contained"
               // sx={{ minHeight: 0, minWidth: 0, padding: 0 }}
             >
-              {currentWorkspace.businessId.name}
+              {currentWorkspace?.businessId?.name}
             </Button>
         {/* <Box display='flex' alignItems='center' m={0} padding={0}> */}
           {/* <Typography sx={{ color: 'gray', fontSize: '16px'}}>{currentWorkspace.businessId.name}</Typography>
