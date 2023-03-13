@@ -150,7 +150,6 @@ export default function AccountGeneral() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      {console.log('myPage.avatarUR', myPage.avatarURL)}
       <Card sx={{ py: 2, px: 3, textAlign: 'center' }}>
             <RHFUploadAvatar
               name="photoURL"

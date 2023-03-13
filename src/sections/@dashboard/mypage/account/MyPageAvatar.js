@@ -152,7 +152,6 @@ export default function MyPageAvatar() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      {console.log('myPage.avatarUR', myPage.avatarURL)}
             <RHFUploadAvatar
               name="photoURL"
               maxSize={3145728}

@@ -75,9 +75,6 @@ LandingPage.getLayout = (page) => <MainLayout> {page} </MainLayout>;
 // ----------------------------------------------------------------------
 
 
-
-
-
 const appBrandColor = {
   youtube: { main: '#FF0000' },
   telegram: { main: '#229ED9' }

@@ -6,7 +6,7 @@ import Script from 'next/script'
 import Head from 'next/head';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Container, Grid, Tab, Tabs, Box, Typography, Button, Card, TextField, Stack, IconButton, Divider, Alert, AlertTitle } from '@mui/material';
+import { Container, Grid, Tab, Tabs, Box, Typography, Button, Card, TextField, Stack, IconButton, Divider, Alert, AlertTitle, MenuItem } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 import { v4 as uuidv4 } from 'uuid'
@@ -28,6 +28,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import IosShareIcon from '@mui/icons-material/IosShare';
+import ShareIcon from '@mui/icons-material/Share';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import usePlacesAutocomplete, {
   getGeocode,
@@ -73,6 +75,10 @@ import slugify from '../../../utils/slugify'
 import localStorageAvailable from '../../../utils/localStorageAvailable'
 import { bgGradient } from '../../../utils/cssStyles'
 import ColorPresetsOptions from '../../../components/settings/drawer/ColorPresetsOptions'
+import MenuPopover from '../../../components/menu-popover'
+
+import useCopyToClipboard from '../../../hooks/useCopyToClipboard'
+import useResponsive from '../../../hooks/useResponsive'
 
 // ----------------------------------------------------------------------
 
@@ -1783,6 +1789,12 @@ export default function MyPage() {
   const { onChangeColorPresets } = useSettingsContext();
   const storageAvailable = localStorageAvailable();
   const [preview, setPreview] = useState(false)
+  const [openShareOptions, setOpenShareOptions] = useState(null)
+
+  const { copy } = useCopyToClipboard();
+  const isDesktop = useResponsive('up', 'lg');
+
+  const { enqueueSnackbar } = useSnackbar();
 
   // eslint-disable-next-line no-prototype-builtins
   const colorPreset = currentWorkspace?.myPage?.themeColor && availableThemeColorPresets.hasOwnProperty(currentWorkspace?.myPage?.themeColor) ? currentWorkspace?.myPage?.themeColor : 'default'
@@ -1799,6 +1811,42 @@ export default function MyPage() {
 
     setSections(refreshSections)
   }, [currentWorkspace])
+
+  const handleOpenShareOptions = (event) => {
+    setOpenShareOptions(event.currentTarget)
+  }
+  const handleCloseShareOptions = () => {
+    setOpenShareOptions(null)
+  }
+
+  const handleCopyLink = () => {
+    const hasCopied = copy(`https://${currentWorkspace.myPage.pageSlug}.okahub.com`)
+    if (hasCopied) {
+      enqueueSnackbar('Link copiado')
+    }
+    if (!hasCopied) {
+      enqueueSnackbar('Erro ao copiar link', { variant: 'error'})
+    }
+    setOpenShareOptions(null)
+  }
+  const handleShareLink = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'teste',
+          text: 'text text text',
+          url: `https://${currentWorkspace.myPage.pageSlug}.okahub.com`,
+        })
+        .then(() => {
+          console.log('Successfully shared');
+        })
+        .catch(error => {
+          console.error('Something went wrong sharing the blog', error);
+        });
+    }
+
+    setOpenShareOptions(null)
+  }
   // const updateBlock = (data) => {
   //   // const blocksToKeep = blocks.filter(block => block.id !== data.id)
   //   const updated = blocks.map(block => {
@@ -1938,14 +1986,53 @@ export default function MyPage() {
                        onClick={() => setPreview(true)}>Visualizar</Button>
               <Button 
                       //  startIcon={<IosShareIcon />}
-                      target="_blank"
-                      rel="noopener"
-                      href={`https://${currentWorkspace?.businessId?.slug}.okahub.com?ohlhv`}
+                      // target="_blank"
+                      // rel="noopener"
+                      // href={`https://${currentWorkspace?.businessId?.slug}.okahub.com?ohlhv`}
                        variant='contained'
-                      //  onClick={() => setPreview(true)}
+                       onClick={handleOpenShareOptions}
                       >
                         <IosShareIcon />
-                       </Button>
+              </Button>
+                        <MenuPopover
+                          open={Boolean(openShareOptions)}
+                          anchorEl={openShareOptions}
+                          onClose={handleCloseShareOptions}
+                          sx={{
+                            mt: 1.5,
+                            ml: 0.75,
+                            width: 200,
+                            '& .MuiMenuItem-root': { px: 1, typography: 'body2', borderRadius: 0.75 },
+                          }}
+                        >
+                          <Stack spacing={0.75}>
+                          <MenuItem
+                                // key={option._id}
+                                // selected={option._id === currentWorkspace._id}
+                                onClick={() => handleCopyLink()}
+                              >
+                                {/* <Image disabledEffect alt={option.label} src={option.icon} sx={{ width: 28, mr: 2 }} /> */}
+
+                                <ContentCopyIcon/> 
+                                <Typography ml={1}>Copiar link</Typography>
+                              </MenuItem>
+                            
+                            
+                            {
+                              !isDesktop && <MenuItem
+                              // key={option._id}
+                              // selected={option._id === currentWorkspace._id}
+                              onClick={() => handleShareLink()}
+                            >
+                              {/* <Image disabledEffect alt={option.label} src={option.icon} sx={{ width: 28, mr: 2 }} /> */}
+
+                              <ShareIcon/>
+                              <Typography ml={1}>Compartilhar link</Typography>
+                            </MenuItem>
+                            }
+                              
+                          </Stack>
+                        </MenuPopover>
 
                 </Box>
 
