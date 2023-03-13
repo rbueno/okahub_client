@@ -68,8 +68,9 @@ const availableIcons = [
     return icon.buildComponent(props)
   }
 
-  export function findLinkConfigByIconId(test){
-    if(!test) return { id: null, color: null }
+  export function findLinkConfigByIconId(link){
+    if(!link) return { id: null, color: null }
+    const test = link.toLowerCase()
     if (test.includes('instagram')) return { id: 'instagram', color: '#E4405F' }
     if (test.includes('youtube')) return { id: 'youtube', color: '#FF0000' }
     if (test.includes('facebook')) return { id: 'facebook', color: '#3b5998' }

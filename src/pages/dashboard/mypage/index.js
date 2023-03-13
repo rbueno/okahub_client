@@ -26,6 +26,8 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import IosShareIcon from '@mui/icons-material/IosShare';
 
 import usePlacesAutocomplete, {
   getGeocode,
@@ -45,9 +47,9 @@ import DashboardLayout from '../../../layouts/dashboard';
 // components
 import Iconify from '../../../components/iconify';
 
-import GetContactComponent from '../../components/mypage/getContactComponent';
-import MapComponent from '../../components/mypage/mapComponent';
-import YoutubeCardVideo from '../../components/mypage/youtubeCardVideo';
+import GetContactComponent from '../../../sections/myPage/components/getContactComponent';
+import MapComponent from '../../../sections/myPage/components/mapComponent'
+import YoutubeCardVideo from '../../../sections/myPage/components/youtubeCardVideo'
 
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 import { useSettingsContext } from '../../../components/settings';
@@ -62,6 +64,7 @@ import {
   MyPageAvatar
 } from '../../../sections/@dashboard/mypage/account';
 import EditBlockTitleDialog from '../../../sections/@dashboard/mypage/editBlockitemDialog/EditBlockTitleDialog'
+import PreviewDialog from '../../../sections/@dashboard/mypage/previewDialog'
 import AppWelcome from '../../../sections/@dashboard/mypage/AppWelcome'
 
 import { useAuthContext } from '../../../auth/useAuthContext'
@@ -375,10 +378,9 @@ const EditBlockLinkButton = ({ currentItemState, saveItemEdition, isOpen, busine
   function formatLink(rawLink) {
     if (!rawLink) return ''
 
-    const linkInLowerCase = rawLink.toLowerCase()
-    if(linkInLowerCase.startsWith('https://') || linkInLowerCase.startsWith('http://')) return linkInLowerCase
+    if(rawLink.startsWith('https://') || rawLink.startsWith('http://')) return rawLink
     
-    return `http://${linkInLowerCase}`
+    return `http://${rawLink}`
   }
   const action = async () => {
     setUpdatingComponent(true)
@@ -434,7 +436,7 @@ const EditBlockLinkButton = ({ currentItemState, saveItemEdition, isOpen, busine
         <TextField
         fullWidth
         value={link}
-        onChange={(e) => setLink(e.target.value.toLocaleLowerCase())}
+        onChange={(e) => setLink(e.target.value)}
         label="Exemplo: www.instagram.com/okahub.com"
         />
 
@@ -1780,6 +1782,7 @@ export default function MyPage() {
   const [dialogContent, setDialogContent] = useState(null)
   const { onChangeColorPresets } = useSettingsContext();
   const storageAvailable = localStorageAvailable();
+  const [preview, setPreview] = useState(false)
 
   // eslint-disable-next-line no-prototype-builtins
   const colorPreset = currentWorkspace?.myPage?.themeColor && availableThemeColorPresets.hasOwnProperty(currentWorkspace?.myPage?.themeColor) ? currentWorkspace?.myPage?.themeColor : 'default'
@@ -1926,26 +1929,26 @@ export default function MyPage() {
         <Box mb={2}>
           <Card>
               <Box m={2} >
-                <Box
-                  sx={{ color: theme.palette.primary.contrastText, backgroundColor: theme.palette.primary.main, borderRadius: 1 }}
-                  display='flex' alignItems='left' p={1}>
+                <Box display='flex' justifyContent='center'>
+              <Button 
+              fullWidth
+              sx={{ marginRight: 2 }}
+                       startIcon={<VisibilityIcon />}
+                       variant='contained'
+                       onClick={() => setPreview(true)}>Visualizar</Button>
+              <Button 
+                      //  startIcon={<IosShareIcon />}
+                      target="_blank"
+                      rel="noopener"
+                      href={`https://${currentWorkspace?.businessId?.slug}.okahub.com?ohlhv`}
+                       variant='contained'
+                      //  onClick={() => setPreview(true)}
+                      >
+                        <IosShareIcon />
+                       </Button>
 
-                    <Button
-                        fullWidth
-                        variant='contained'
-                        // sx={{ m: 1 }}
-                        target="_blank"
-                        rel="noopener"
-                        href={`https://${currentWorkspace?.businessId?.slug}.okahub.com`}
-                        size="small"
-                        >
-                        <Box display='flex' alignContent='center' alignItems='center'>
-                          <Typography sx={{ fontSize: '12px' }}>https://</Typography>
-                          <Typography sx={{ fontSize: '16px', fontWeight: '600' }}>{currentWorkspace?.businessId?.slug}</Typography>
-                          <Typography sx={{ fontSize: '12px' }}>.okahub.com</Typography>
-                        </Box>
-                    </Button>
                 </Box>
+
                     <Box display='flex' justifyContent='flex-end'>
                       <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditLink()}> <SettingsIcon fontSize='small' /> Editar link</Button>
                       <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditColorTheme()}> <ColorLensIcon fontSize='small' /> Editar cor do tema</Button>
@@ -2011,6 +2014,7 @@ export default function MyPage() {
 
       </Container>
       <EditBlockTitleDialog open={openEditItemBlock} content={dialogContent} onClose={() => setOpenEditItemBlock(false)}/>
+      <PreviewDialog open={preview} onClose={setPreview} page={currentWorkspace?.myPage} />
     </>
   );
 }
