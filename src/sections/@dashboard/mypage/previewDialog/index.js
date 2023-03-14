@@ -14,6 +14,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import PropTypes from 'prop-types';
 
+import IosShareIcon from '@mui/icons-material/IosShare';
+
 import { MyPage } from '../../../myPage'
 
 // eslint-disable-next-line prefer-arrow-callback
@@ -24,10 +26,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 PreviewDialog.propTypes = {
     page: PropTypes.object,
     open: PropTypes.bool,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    handleOpenShareOptions: PropTypes.func
   };
   
-export default function PreviewDialog({ page, open, onClose }) {
+export default function PreviewDialog({ page, open, onClose, handleOpenShareOptions }) {
   // const [open, setOpen] = React.useState(false);
 
   // const handleClickOpen = () => {
@@ -59,7 +62,7 @@ export default function PreviewDialog({ page, open, onClose }) {
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               Visualização
             </Typography>
-            <Button autoFocus color="inherit">
+            <Button startIcon={<IosShareIcon />} variant='outlined' color="inherit" onClick={(e) => handleOpenShareOptions(e)}>
               Compartilhar
             </Button>
           </Toolbar>

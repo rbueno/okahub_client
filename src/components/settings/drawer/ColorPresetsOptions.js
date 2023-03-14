@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { useSettingsContext } from '../SettingsContext';
 import { StyledCard, StyledWrap, MaskControl, StyledCircleColor } from '../styles';
 import api from '../../../utils/axios'
+import { useAuthContext } from '../../../auth/useAuthContext'
 
 // ----------------------------------------------------------------------
 
@@ -18,6 +19,7 @@ ColorPresetsOptions.propTypes = {
 
 export default function ColorPresetsOptions({ setIsUpdatingColor }) {
   const { themeColorPresets, onChangeColorPresets, presetsOption } = useSettingsContext();
+  const { updateWorkspaces } = useAuthContext()
   const { enqueueSnackbar } = useSnackbar();
   const handleOnChangeColorPresets = async (e) => {
     const payload ={
@@ -28,8 +30,8 @@ export default function ColorPresetsOptions({ setIsUpdatingColor }) {
       setIsUpdatingColor(true)
       const response = await api.put('v1/business/themecolor', payload)
       
-      // const { workspaceSession } = response.data
-      // updateWorkspaces(workspaceSession)
+      const { workspaceSession } = response.data
+      updateWorkspaces(workspaceSession)
       onChangeColorPresets(e)
       enqueueSnackbar('Cor alterada!');
       // isOpen(false)

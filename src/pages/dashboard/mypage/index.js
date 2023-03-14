@@ -2091,7 +2091,7 @@ export default function MyPage() {
 
  {/* elementsSection businessProfileSection businessThemeSection */}
         {
-          currentTab === 'businessProfileSection' && <>
+          currentTab === 'businessProfileSection' && <Box mt={4}>
           {
           currentWorkspace?.myPage && <Box>
             <Card sx={{ py: 2, px: 3, textAlign: 'center' }}>
@@ -2139,11 +2139,11 @@ export default function MyPage() {
         </Box>
           </Box> 
         }
-          </>
+          </Box>
         }
 
         {
-          currentTab === 'elementsSection' && <>
+          currentTab === 'elementsSection' && <Box mt={4}>
              {
          sections.length > 0 && sections.map((section, SectionIdx) => <Section key={section.sectionId.toString()} setSettingSectionsVisible={setSettingSectionsVisible} settingSectionsVisible={settingSectionsVisible} upwardSection={upwardSection} downwardSection={downwardSection} SectionIdx={SectionIdx} sectionsLength={sections.length} section={section} businessSlug={currentWorkspace?.myPage?.pageSlug} businessId={currentWorkspace?.businessId?._id} data={currentWorkspace?.myPage} updateSection={updateSection} updateWorkspaces={updateWorkspaces}/>)
         }
@@ -2153,11 +2153,11 @@ export default function MyPage() {
           <LoadingButton variant='outlined' size='large' startIcon={<PlaylistAddCircleIcon />} fullWidth loading={addingSection} onClick={() => addSection()}>Adicionar Seção</LoadingButton>
 
         </Box>
-          </>
+          </Box>
         }
         
         {
-          currentTab === 'businessThemeSection' && <Box m={2}>
+          currentTab === 'businessThemeSection' && <Box m={4}>
             <Typography variant='h4'>Cor do tema</Typography>
             <Typography>Escolha uma cor para o tema de sua página</Typography>
             <Box m={2}>
@@ -2176,7 +2176,7 @@ export default function MyPage() {
 
       </Container>
       <EditBlockTitleDialog open={openEditItemBlock} content={dialogContent} onClose={() => setOpenEditItemBlock(false)}/>
-      <PreviewDialog open={preview} onClose={setPreview} page={currentWorkspace?.myPage} />
+      <PreviewDialog open={preview} onClose={setPreview} page={currentWorkspace?.myPage} handleOpenShareOptions={handleOpenShareOptions} />
     </>
   );
 }
