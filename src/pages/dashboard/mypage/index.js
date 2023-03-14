@@ -1855,9 +1855,9 @@ export default function MyPage() {
     if (navigator.share) {
       navigator
         .share({
-          title: 'teste',
-          text: 'text text text',
-          url: `https://${currentWorkspace.myPage.pageSlug}.okahub.com`,
+          title: `${currentWorkspace?.myPage?.pageSlug} | Okahub`,
+          text: `${currentWorkspace?.businessId?.name} | Okahub`,
+          url: `https://${currentWorkspace?.myPage?.pageSlug}.okahub.com`,
         })
         .then(() => {
           console.log('Successfully shared');
