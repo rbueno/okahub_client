@@ -13,10 +13,10 @@ import api from '../../../utils/axios'
 // ----------------------------------------------------------------------
 
 ColorPresetsOptions.propTypes = {
-  isOpen: PropTypes.func
+  setIsUpdatingColor: PropTypes.func
 }
 
-export default function ColorPresetsOptions({ isOpen }) {
+export default function ColorPresetsOptions({ setIsUpdatingColor }) {
   const { themeColorPresets, onChangeColorPresets, presetsOption } = useSettingsContext();
   const { enqueueSnackbar } = useSnackbar();
   const handleOnChangeColorPresets = async (e) => {
@@ -25,17 +25,19 @@ export default function ColorPresetsOptions({ isOpen }) {
     }
 
     try {
+      setIsUpdatingColor(true)
       const response = await api.put('v1/business/themecolor', payload)
       
       // const { workspaceSession } = response.data
       // updateWorkspaces(workspaceSession)
       onChangeColorPresets(e)
-      enqueueSnackbar('Mudança concluída');
-      isOpen(false)
+      enqueueSnackbar('Cor alterada!');
+      // isOpen(false)
     } catch (error) {
       enqueueSnackbar(error.message && error.message, { variant: 'error' });
       console.error(error);
     }
+    setIsUpdatingColor(false)
 
   }
 

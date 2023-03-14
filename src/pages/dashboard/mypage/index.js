@@ -6,7 +6,7 @@ import Script from 'next/script'
 import Head from 'next/head';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Container, Grid, Tab, Tabs, Box, Typography, Button, Card, TextField, Stack, IconButton, Divider, Alert, AlertTitle, MenuItem } from '@mui/material';
+import { Container, Grid, Tab, Tabs, Box, Typography, Button, Card, TextField, Stack, IconButton, Divider, Alert, AlertTitle, MenuItem, Skeleton, CircularProgress } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 import { v4 as uuidv4 } from 'uuid'
@@ -117,6 +117,26 @@ const TABS = [
     label: 'Google Maps',
     icon: <Iconify icon="ic:round-vpn-key" />,
     component: <Box>Informe o seu endereço físico com um mapa super dinâmico</Box>,
+  },
+];
+const SCREENS = [
+  {
+    value: 'elementsSection',
+    label: 'Elementos',
+    icon: <Iconify icon="ic:round-receipt" />,
+    component: <Box>Crie um texto livre com descrições e detalhes que enriqueçam seu conteúdo.</Box>,
+  },
+  {
+    value: 'businessProfileSection',
+    label: 'Perfil',
+    icon: <Iconify icon="eva:share-fill" />,
+    component: <Box>Crie botões com links externos de, por exemplo, uma site de vendas ou redes sociais</Box>,
+  },
+  {
+    value: 'businessThemeSection',
+    label: 'Aparência',
+    icon: <Iconify icon="ic:round-account-box" />,
+    component: <Box>Capture contatos e tenha uma lista de leads qualificados.</Box>,
   },
 ];
 
@@ -1790,6 +1810,8 @@ export default function MyPage() {
   const storageAvailable = localStorageAvailable();
   const [preview, setPreview] = useState(false)
   const [openShareOptions, setOpenShareOptions] = useState(null)
+  const [isUpdatingColor, setIsUpdatingColor] = useState(false)
+  const [currentTab, setCurrentTab] = useState('elementsSection');
 
   const { copy } = useCopyToClipboard();
   const isDesktop = useResponsive('up', 'lg');
@@ -2036,9 +2058,9 @@ export default function MyPage() {
 
                 </Box>
 
-                    <Box display='flex' justifyContent='flex-end'>
-                      <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditLink()}> <SettingsIcon fontSize='small' /> Editar link</Button>
-                      <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditColorTheme()}> <ColorLensIcon fontSize='small' /> Editar cor do tema</Button>
+                    {/* <Box display='flex' justifyContent='flex-end'> */}
+                      {/* <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditLink()}> <SettingsIcon fontSize='small' /> Editar link</Button>
+                      <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditColorTheme()}> <ColorLensIcon fontSize='small' /> Editar cor do tema</Button> */}
                       {/* <Button variant='outlined' sx={{ m: 1 }} size="small">Visualizar </Button>  */}
                       {/* <Button
                         sx={{ m: 1 }}
@@ -2054,12 +2076,23 @@ export default function MyPage() {
                       >
                         Visualizar
                     </Button> */}
-                    </Box>
+                    {/* </Box> */}
               </Box>
           </Card>
         </Box>
 
+        <Box>
+        <Tabs variant="fullWidth" value={currentTab} onChange={(event, newValue) => setCurrentTab(newValue)}>
+            {SCREENS.map((tab) => (
+              <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
+            ))}
+          </Tabs>
+    </Box>
+
+ {/* elementsSection businessProfileSection businessThemeSection */}
         {
+          currentTab === 'businessProfileSection' && <>
+          {
           currentWorkspace?.myPage && <Box>
             <Card sx={{ py: 2, px: 3, textAlign: 'center' }}>
               <MyPageAvatar />
@@ -2085,11 +2118,33 @@ export default function MyPage() {
             </Box>
 
             </Card>
+
+            <Box mt={2}>
+          <Card>
+              <Box m={2} >
+                <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
+                  <Typography>{`https://${currentWorkspace?.businessId?.slug}.okahub.com`}</Typography>
+                        
+                <Stack direction='row'>
+                      <Button variant='outlined' sx={{ m: 1 }} onClick={() => handleDisplayEditLink()} startIcon={<SettingsIcon />}> Editar link</Button>
+                      <Button variant='outlined' sx={{ m: 1 }} onClick={(e) => handleOpenShareOptions(e)}> <IosShareIcon /> </Button>
+
+                </Stack>
+
+                </Box>
+
+                   
+              </Box>
+          </Card>
+        </Box>
           </Box> 
         }
-        
+          </>
+        }
 
         {
+          currentTab === 'elementsSection' && <>
+             {
          sections.length > 0 && sections.map((section, SectionIdx) => <Section key={section.sectionId.toString()} setSettingSectionsVisible={setSettingSectionsVisible} settingSectionsVisible={settingSectionsVisible} upwardSection={upwardSection} downwardSection={downwardSection} SectionIdx={SectionIdx} sectionsLength={sections.length} section={section} businessSlug={currentWorkspace?.myPage?.pageSlug} businessId={currentWorkspace?.businessId?._id} data={currentWorkspace?.myPage} updateSection={updateSection} updateWorkspaces={updateWorkspaces}/>)
         }
 
@@ -2098,6 +2153,26 @@ export default function MyPage() {
           <LoadingButton variant='outlined' size='large' startIcon={<PlaylistAddCircleIcon />} fullWidth loading={addingSection} onClick={() => addSection()}>Adicionar Seção</LoadingButton>
 
         </Box>
+          </>
+        }
+        
+        {
+          currentTab === 'businessThemeSection' && <Box m={2}>
+            <Typography variant='h4'>Cor do tema</Typography>
+            <Typography>Escolha uma cor para o tema de sua página</Typography>
+            <Box m={2}>
+              {
+              isUpdatingColor && <Box m={2} display='flex' justifyContent='center'>
+              <CircularProgress color="info" />
+              </Box>
+              }
+            { !isUpdatingColor && <ColorPresetsOptions setIsUpdatingColor={setIsUpdatingColor} />}
+            </Box>
+        </Box>
+          
+        }
+
+       
 
       </Container>
       <EditBlockTitleDialog open={openEditItemBlock} content={dialogContent} onClose={() => setOpenEditItemBlock(false)}/>
