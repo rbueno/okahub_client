@@ -1648,8 +1648,12 @@ const theme = useTheme()
 
   return (
     <>
-    <Box sx={{ mt: 2, mb: 2 }}>
-      <Card >
+    <Box
+      sx={{ mt: 2, mb: 2 }}
+      >
+      <Card 
+        // sx={{ backgroundColor: '#D3D3D3'  }}
+      >
 
       {/* <Container fullWidth> */}
       <Box mb={2} >
@@ -1863,7 +1867,7 @@ export default function MyPage() {
           console.log('Successfully shared');
         })
         .catch(error => {
-          console.error('Something went wrong sharing the blog', error);
+          console.error('Something went wrong sharing the page', error);
         });
     }
 
@@ -1995,10 +1999,14 @@ export default function MyPage() {
       /> */}
       </Head>
 
-      <Container disableGutters maxWidth='sm'>
+      <Container
+        disableGutters
+        maxWidth='sm'
+       sx={{ backgroundColor: '#DCDCDC' }}
+      >
         <Box mb={2}>
-          <Card>
-              <Box m={2} >
+          <Box sx={{ backgroundColor: 'common.white', p: 1}}>
+              <Box >
                 <Box display='flex' justifyContent='center'>
               <Button 
               fullWidth
@@ -2078,7 +2086,7 @@ export default function MyPage() {
                     </Button> */}
                     {/* </Box> */}
               </Box>
-          </Card>
+          </Box>
         </Box>
 
         <Box>
@@ -2145,12 +2153,14 @@ export default function MyPage() {
         {
           currentTab === 'elementsSection' && <Box mt={4}>
              {
-         sections.length > 0 && sections.map((section, SectionIdx) => <Section key={section.sectionId.toString()} setSettingSectionsVisible={setSettingSectionsVisible} settingSectionsVisible={settingSectionsVisible} upwardSection={upwardSection} downwardSection={downwardSection} SectionIdx={SectionIdx} sectionsLength={sections.length} section={section} businessSlug={currentWorkspace?.myPage?.pageSlug} businessId={currentWorkspace?.businessId?._id} data={currentWorkspace?.myPage} updateSection={updateSection} updateWorkspaces={updateWorkspaces}/>)
+         sections.length > 0 && sections.map((section, SectionIdx) => <Box key={section.sectionId.toString()} mb={4}>
+          <Section setSettingSectionsVisible={setSettingSectionsVisible} settingSectionsVisible={settingSectionsVisible} upwardSection={upwardSection} downwardSection={downwardSection} SectionIdx={SectionIdx} sectionsLength={sections.length} section={section} businessSlug={currentWorkspace?.myPage?.pageSlug} businessId={currentWorkspace?.businessId?._id} data={currentWorkspace?.myPage} updateSection={updateSection} updateWorkspaces={updateWorkspaces}/>
+         </Box>)
         }
 
 <Divider />
         <Box m={2} mt={4}>
-          <LoadingButton variant='outlined' size='large' startIcon={<PlaylistAddCircleIcon />} fullWidth loading={addingSection} onClick={() => addSection()}>Adicionar Seção</LoadingButton>
+          <LoadingButton variant='contained' size='large' startIcon={<PlaylistAddCircleIcon />} fullWidth loading={addingSection} onClick={() => addSection()}>Adicionar Seção</LoadingButton>
 
         </Box>
           </Box>
