@@ -486,6 +486,10 @@ const EditGoogleMaps = ({ currentItemState, saveItemEdition, isOpen, businessSlu
     initOnMount: false,
     requestOptions: {
       /* Define search scope here */
+      // region: 'br',
+      // componentRestrictions: {
+      //   country: 'br',
+      // },
     },
     debounce: 300,
   })
