@@ -87,312 +87,8 @@ import useResponsive from '../../../hooks/useResponsive'
 MyPage.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 // ----------------------------------------------------------------------
-const TABS = [
-  {
-    value: 'paragraph',
-    label: 'Texto',
-    icon: <Iconify icon="ic:round-receipt" />,
-    component: <Box>Crie um texto livre com descrições e detalhes que enriqueçam seu conteúdo.</Box>,
-  },
-  {
-    value: 'linkButton',
-    label: 'Link',
-    icon: <Iconify icon="eva:share-fill" />,
-    component: <Box>Crie botões com links externos de, por exemplo, uma site de vendas ou redes sociais</Box>,
-  },
-  {
-    value: 'getContacts',
-    label: 'Captar contato',
-    icon: <Iconify icon="ic:round-account-box" />,
-    component: <Box>Capture contatos e tenha uma lista de leads qualificados.</Box>,
-  },
-  {
-    value: 'youtubeCardVideo',
-    label: 'Youtube',
-    icon: <YouTubeIcon />,
-    component: <Box>Destaque um vídeo de seu canal do Youtube.</Box>,
-  },
-  {
-    value: 'googlemaps',
-    label: 'Google Maps',
-    icon: <Iconify icon="ic:round-vpn-key" />,
-    component: <Box>Informe o seu endereço físico com um mapa super dinâmico</Box>,
-  },
-];
-const SCREENS = [
-  {
-    value: 'elementsSection',
-    label: 'Elementos',
-    icon: <Iconify icon="ic:round-receipt" />,
-    component: <Box>Crie um texto livre com descrições e detalhes que enriqueçam seu conteúdo.</Box>,
-  },
-  {
-    value: 'businessProfileSection',
-    label: 'Perfil',
-    icon: <Iconify icon="eva:share-fill" />,
-    component: <Box>Crie botões com links externos de, por exemplo, uma site de vendas ou redes sociais</Box>,
-  },
-  {
-    value: 'businessThemeSection',
-    label: 'Aparência',
-    icon: <Iconify icon="ic:round-account-box" />,
-    component: <Box>Capture contatos e tenha uma lista de leads qualificados.</Box>,
-  },
-];
 
-const availableThemeColorPresets = {
-  default: 'default',
-  cyan: 'cyan',
-  purple: 'purple',
-  blue: 'blue',
-  orange: 'orange',
-  red: 'red'
-}
-
-const buildComponent = ({component, theme, businessSlug, businessId, setSettingVisible, settingVisible, data }) => {
-  const iconComponent = component?.props?.icon && buildIcon(component.props.icon)
-  const componentDisplayName = () => TABS.find(item => item.value === component.type).label
-  // <Button component={NextLink} href="/" size="large" variant="contained">
-  //         Go to Home
-  //       </Button>
-
-  if (!component?.props) {
-    return <Box
-      size="large"
-      // variant="outlined"
-
-      // onClick={() => setSettingVisible( settingVisible === component.componentId ? null : component.componentId )} disableRipple
-    >
-      {/* <Typography >Novo item adicionado</Typography>
-      <Typography>tipo: {componentDisplayName()}</Typography> */}
-      <Alert severity='success'>
-                  <AlertTitle sx={{ textTransform: 'capitalize' }}> Novo item adicionado </AlertTitle>
-                  tipo: {componentDisplayName()}
-                </Alert>
-    </Box>
-  }
-  if (component.type === 'linkButton') {
-    return (
-      <Button
-      fullWidth
-      {...(iconComponent ? { startIcon: iconComponent } : {})}
-      //  startIcon={iconComponent.iconComponent}
-          size="large"
-          variant="contained"
-          sx={{
-            backgroundColor: component.props?.color || theme.palette.primary.main
-          }}
-          // component={NextLink}
-          href={component.props.link}
-          // href={PATH_DOCS.root} 
-          target="_blank"
-          rel="noopener" 
-          // disabled={false}
-          onClick={() => console.log('linkButton clicked test')}
-          // disabled={props?.data?.Celular ? false : true}
-          // onClick={() => handleWhatsAppClick(props.data.Celular)} disableRipple
-          disableRipple
-        >
-          {component.props?.text}
-      </Button>
-    )
-  }
-  if (component.type === 'paragraph') {
-    return (
-      <Typography textAlign="center" variant="body2">{component.props?.text}</Typography>
-    )
-  }
-
-  if (component.type === 'googlemaps') {
-    return (
-      <MapComponent
-        lat={component.props.lat}
-        lng={component.props.lng}
-        url={component.props.url}
-        placeTitle={component.props.name}
-        placeAddress={component.props.formattedAddress}
-        component={component}
-        businessSlug={businessSlug}
-        businessId={data.businessId}
-        pageId={data._id}
-      />
-    )
-  }
-
-  if (component.type === 'getContacts') {
-    return (
-      <GetContactComponent
-      price="$50"
-      title={component.props?.title || 'Ative as notificações!'}
-      description={component.props?.description || 'Cadastre-se e não perca nenhuma novidade importante.'}
-      businessSlug={businessSlug}
-      businessId={businessId}
-      />
-    )
-  }
-  if (component.type === 'youtubeCardVideo') {
-    return (
-      <YoutubeCardVideo
-        title={component.props?.title}
-        videoId={component.props?.videoId}
-        subscriptionLink={component.subscriptionLink}
-        subscriptionLinkLabel={component.subscriptionLinkLabel}
-        businessSlug={businessSlug}
-        businessId={data.businessId}
-        pageId={data._id}
-        component={component}
-      />
-    )
-  }
-
-  return <></>
-}
-
-// eslint-disable-next-line react/prop-types
-const EditBlockTitle = ({ sectionId, title: currentTitle, saveItemEdition, isOpen, businessSlug }) => {
-  const [title, setTitle] = useState(currentTitle)
-  const [updatingTitle, setUpdatingTitle] = useState()
-  const [deletingSection, setDeletingSection] = useState()
-  const [showDeleteComponent, setShowDeleteComponent] = useState(false)
-
-  const action = async () => {
-    setUpdatingTitle(true)
-    
-    try {
-      const { data } = await api.put(`v1/section/${sectionId}`, { title, businessSlug })
-      saveItemEdition(data.workspaceSession)
-    } catch(error) {
-      console.log(error)
-    }
-    // saveItemEdition({ type: 'sectionTitle', title })
-    isOpen(false)
-    setUpdatingTitle(false)
-  }
-  const handleDelete = async () => {
-    setDeletingSection(true)
-    
-    try {
-      const { data } = await api.put(`v1/section/delete/${sectionId}`, { businessSlug })
-      saveItemEdition(data.workspaceSession)
-    } catch(error) {
-      console.log('error', error)
-    }
-    // saveItemEdition({ type: 'sectionTitle', title })
-    isOpen(false)
-    setDeletingSection(false)
-  }
-
-  return (
-    <>
-    {
-      !showDeleteComponent && <Box>
-      <Box sx={{ paddingTop: 1, paddingBottom: 1 }}>
-      <TextField
-          fullWidth
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          label="Exemplo: Redes sociais"
-          />
-
-      </Box>
-      <Stack
-      spacing={2}
-      direction="row"
-      alignItems="flex-end"
-    >
-      <LoadingButton fullWidth variant='outlined' color="error" onClick={() => setShowDeleteComponent(true)}>Deletar</LoadingButton>
-
-      <LoadingButton fullWidth variant='contained' color="success" loading={updatingTitle} onClick={() => action()}>Salvar</LoadingButton>
-
-    </Stack>
-    </Box>
-    
-    
-    }
-    {
-      showDeleteComponent && <Box>
-        <Box mb={2}>
-          <Typography variant='h3'>Atenção! </Typography>
-          <Typography variant='subtitle1'>Você irá deletar essa seção juntamente com todos os componentes desta seção. Essa ação não poderá ser revertida!</Typography>
-
-        </Box>
-        <Stack
-        spacing={2}
-        direction="row"
-        alignItems="flex-end"
-      >
-        <Button
-          fullWidth
-          color="success"
-          variant="contained"
-          startIcon={<Iconify icon="eva:checkmark-circle-2-fill" />}
-          onClick={() => setShowDeleteComponent(false)}
-        >
-          Voltar
-        </Button>
-
-        <LoadingButton
-          fullWidth
-          color="error"
-          variant="contained"
-          startIcon={<Iconify icon="eva:close-circle-fill" />}
-          loading={deletingSection}
-          onClick={() => handleDelete()}
-        >
-          Confirmar
-        </LoadingButton>
-      </Stack>
-      </Box>
-    }
-    </>
-  )
-}
-const AddNewItem = ({ addComponent, isOpen }) => {
-  const [currentTab, setCurrentTab] = useState('linkButton');
-const [addingItem, setAddingItem] = useState(false)
-  const action = async (componentValue) => {
-    setAddingItem(true)
-    try {
-      await addComponent(componentValue)
-    } catch (error) {
-      console.log(error)
-    }
-    setAddingItem(false)
-    isOpen(false)
-  }
-  
-
-  return (
-    <Box>
-     <Box display='flex' alignItems='center' justifyContent='center' m={2}>
-          <Typography variant='subtitle2'>Novo Item</Typography>
-
-        </Box>
-        <Tabs value={currentTab} onChange={(event, newValue) => setCurrentTab(newValue)}>
-            {TABS.map((tab) => (
-              <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
-            ))}
-          </Tabs>
-
-          {TABS.map(
-            (tab) =>
-              tab.value === currentTab && (
-                <Box key={tab.value}>
-                <Box sx={{ mt: 2 }}>
-                  {tab.component}
-                </Box>
-                <Box sx={{ mt: 2 }}>
-                  <LoadingButton loading={addingItem} variant='contained' onClick={() => action(tab.value)}>Adicionar {tab.label}</LoadingButton>
-                </Box>
-                </Box>
-              )
-          )}  
-    </Box>
-  )
-}
-
-// eslint-disable-next-line react/prop-types
-const EditBlockLinkButton = ({ currentItemState, saveItemEdition, isOpen, businessSlug }) => {
+const EditLinkButton = ({ currentItemState, saveItemEdition, isOpen, businessSlug }) => {
   const [link, setLink] = useState(currentItemState.props?.link)
   const [label, setLabel] = useState(currentItemState.props?.text)
   const [icon, setIcon] = useState(currentItemState.props?.icon?.id || null)
@@ -518,6 +214,104 @@ const EditBlockLinkButton = ({ currentItemState, saveItemEdition, isOpen, busine
           variant="contained"
           startIcon={<Iconify icon="eva:close-circle-fill" />}
           loading={deletingComponent}
+          onClick={() => handleDelete()}
+        >
+          Confirmar
+        </LoadingButton>
+      </Stack>
+      </Box>
+    }
+    </>
+  )
+}
+const EditBlockTitle = ({ sectionId, title: currentTitle, saveItemEdition, isOpen, businessSlug }) => {
+  const [title, setTitle] = useState(currentTitle)
+  const [updatingTitle, setUpdatingTitle] = useState()
+  const [deletingSection, setDeletingSection] = useState()
+  const [showDeleteComponent, setShowDeleteComponent] = useState(false)
+
+  const action = async () => {
+    setUpdatingTitle(true)
+    
+    try {
+      const { data } = await api.put(`v1/section/${sectionId}`, { title, businessSlug })
+      saveItemEdition(data.workspaceSession)
+    } catch(error) {
+      console.log(error)
+    }
+    // saveItemEdition({ type: 'sectionTitle', title })
+    isOpen(false)
+    setUpdatingTitle(false)
+  }
+  const handleDelete = async () => {
+    setDeletingSection(true)
+    
+    try {
+      const { data } = await api.put(`v1/section/delete/${sectionId}`, { businessSlug })
+      saveItemEdition(data.workspaceSession)
+    } catch(error) {
+      console.log('error', error)
+    }
+    // saveItemEdition({ type: 'sectionTitle', title })
+    isOpen(false)
+    setDeletingSection(false)
+  }
+
+  return (
+    <>
+    {
+      !showDeleteComponent && <Box>
+      <Box sx={{ paddingTop: 1, paddingBottom: 1 }}>
+      <TextField
+          fullWidth
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          label="Exemplo: Redes sociais"
+          />
+
+      </Box>
+      <Stack
+      spacing={2}
+      direction="row"
+      alignItems="flex-end"
+    >
+      <LoadingButton fullWidth variant='outlined' color="error" onClick={() => setShowDeleteComponent(true)}>Deletar</LoadingButton>
+
+      <LoadingButton fullWidth variant='contained' color="success" loading={updatingTitle} onClick={() => action()}>Salvar</LoadingButton>
+
+    </Stack>
+    </Box>
+    
+    
+    }
+    {
+      showDeleteComponent && <Box>
+        <Box mb={2}>
+          <Typography variant='h3'>Atenção! </Typography>
+          <Typography variant='subtitle1'>Você irá deletar essa seção juntamente com todos os componentes desta seção. Essa ação não poderá ser revertida!</Typography>
+
+        </Box>
+        <Stack
+        spacing={2}
+        direction="row"
+        alignItems="flex-end"
+      >
+        <Button
+          fullWidth
+          color="success"
+          variant="contained"
+          startIcon={<Iconify icon="eva:checkmark-circle-2-fill" />}
+          onClick={() => setShowDeleteComponent(false)}
+        >
+          Voltar
+        </Button>
+
+        <LoadingButton
+          fullWidth
+          color="error"
+          variant="contained"
+          startIcon={<Iconify icon="eva:close-circle-fill" />}
+          loading={deletingSection}
           onClick={() => handleDelete()}
         >
           Confirmar
@@ -914,7 +708,6 @@ const EditGoogleMaps = ({ currentItemState, saveItemEdition, isOpen, businessSlu
     </>
   )
 }
-
 const EditGetContacts = ({ currentItemState, saveItemEdition, isOpen, businessSlug }) => {
   console.log('currentItemState', currentItemState)
   console.log('businessSlug', businessSlug)
@@ -1036,7 +829,6 @@ const EditGetContacts = ({ currentItemState, saveItemEdition, isOpen, businessSl
     </>
   )
 }
-
 const EditParagraph = ({ currentItemState, saveItemEdition, isOpen, businessSlug }) => {
   console.log('currentItemState', currentItemState)
   console.log('businessSlug', businessSlug)
@@ -1167,6 +959,232 @@ const EditParagraph = ({ currentItemState, saveItemEdition, isOpen, businessSlug
     </>
   )
 }
+
+// ----------------------------------------------------------------------
+const TABS = [
+  {
+    value: 'paragraph',
+    label: 'Texto',
+    icon: <Iconify icon="ic:round-receipt" />,
+    component: <Box>Crie um texto livre com descrições e detalhes que enriqueçam seu conteúdo.</Box>,
+    build: (props) => <EditParagraph {...props} />
+  },
+  {
+    value: 'linkButton',
+    label: 'Link',
+    icon: <Iconify icon="eva:share-fill" />,
+    component: <Box>Crie botões com links externos de, por exemplo, uma site de vendas ou redes sociais</Box>,
+    build: (props) => <EditLinkButton {...props} />
+  },
+  {
+    value: 'getContacts',
+    label: 'Captar contato',
+    icon: <Iconify icon="ic:round-account-box" />,
+    component: <Box>Capture contatos e tenha uma lista de leads qualificados.</Box>,
+    build: (props) => <EditGetContacts {...props} />
+  },
+  {
+    value: 'youtubeCardVideo',
+    label: 'Youtube',
+    icon: <YouTubeIcon />,
+    component: <Box>Destaque um vídeo de seu canal do Youtube.</Box>,
+    build: (props) => <EditYoutubeCardVideo {...props} />
+  },
+  {
+    value: 'googlemaps',
+    label: 'Google Maps',
+    icon: <Iconify icon="ic:round-vpn-key" />,
+    component: <Box>Informe o seu endereço físico com um mapa super dinâmico</Box>,
+    build: (props) => <EditGoogleMaps {...props} />
+  },
+];
+const SCREENS = [
+  {
+    value: 'elementsSection',
+    label: 'Elementos',
+    icon: <Iconify icon="ic:round-receipt" />,
+    component: <Box>Crie um texto livre com descrições e detalhes que enriqueçam seu conteúdo.</Box>,
+  },
+  {
+    value: 'businessProfileSection',
+    label: 'Perfil',
+    icon: <Iconify icon="eva:share-fill" />,
+    component: <Box>Crie botões com links externos de, por exemplo, uma site de vendas ou redes sociais</Box>,
+  },
+  {
+    value: 'businessThemeSection',
+    label: 'Aparência',
+    icon: <Iconify icon="ic:round-account-box" />,
+    component: <Box>Capture contatos e tenha uma lista de leads qualificados.</Box>,
+  },
+];
+
+const availableThemeColorPresets = {
+  default: 'default',
+  cyan: 'cyan',
+  purple: 'purple',
+  blue: 'blue',
+  orange: 'orange',
+  red: 'red'
+}
+
+
+
+const buildComponent = ({component, theme, businessSlug, businessId, setSettingVisible, settingVisible, data, saveItemEdition }) => {
+  const iconComponent = component?.props?.icon && buildIcon(component.props.icon)
+  const componentDisplayName = () => TABS.find(item => item.value === component.type).label
+  console.log('')
+  const getComponentToEdit = () => TABS.find(item => item.value === component.type)
+  // <Button component={NextLink} href="/" size="large" variant="contained">
+  //         Go to Home
+  //       </Button>
+
+  if (!component?.props) {
+    // return <Box
+    //   size="large"
+    //   // variant="outlined"
+
+    //   // onClick={() => setSettingVisible( settingVisible === component.componentId ? null : component.componentId )} disableRipple
+    // >
+    //   {/* <Typography >Novo item adicionado</Typography>
+    //   <Typography>tipo: {componentDisplayName()}</Typography> */}
+    //   <Alert severity='success'>
+    //               <AlertTitle sx={{ textTransform: 'capitalize' }}> Novo item adicionado </AlertTitle>
+    //               tipo: {componentDisplayName()}
+    //             </Alert>
+    // </Box>
+    return <Box p={2} sx={{ border: '#DCDCDC solid 1px'}}>
+      <Typography variant='h5'>{`Editar ${componentDisplayName()}`}</Typography>
+      {/* <EditLinkButton currentItemState={component} businessSlug={businessSlug} saveItemEdition={saveItemEdition} isOpen={() => console.log()} /> */}
+      <>{getComponentToEdit().build({ currentItemState: component, businessSlug, saveItemEdition, isOpen: () => console.log() })}</>
+    </Box>
+  }
+  if (component.type === 'linkButton') {
+    return (
+      <Button
+      fullWidth
+      {...(iconComponent ? { startIcon: iconComponent } : {})}
+      //  startIcon={iconComponent.iconComponent}
+          size="large"
+          variant="contained"
+          sx={{
+            backgroundColor: component.props?.color || theme.palette.primary.main
+          }}
+          // component={NextLink}
+          href={component.props.link}
+          // href={PATH_DOCS.root} 
+          target="_blank"
+          rel="noopener" 
+          // disabled={false}
+          onClick={() => console.log('linkButton clicked test')}
+          // disabled={props?.data?.Celular ? false : true}
+          // onClick={() => handleWhatsAppClick(props.data.Celular)} disableRipple
+          disableRipple
+        >
+          {component.props?.text}
+      </Button>
+    )
+  }
+  if (component.type === 'paragraph') {
+    return (
+      <Typography textAlign="center" variant="body2">{component.props?.text}</Typography>
+    )
+  }
+
+  if (component.type === 'googlemaps') {
+    return (
+      <MapComponent
+        lat={component.props.lat}
+        lng={component.props.lng}
+        url={component.props.url}
+        placeTitle={component.props.name}
+        placeAddress={component.props.formattedAddress}
+        component={component}
+        businessSlug={businessSlug}
+        businessId={data.businessId}
+        pageId={data._id}
+      />
+    )
+  }
+
+  if (component.type === 'getContacts') {
+    return (
+      <GetContactComponent
+      price="$50"
+      title={component.props?.title || 'Ative as notificações!'}
+      description={component.props?.description || 'Cadastre-se e não perca nenhuma novidade importante.'}
+      businessSlug={businessSlug}
+      businessId={businessId}
+      />
+    )
+  }
+  if (component.type === 'youtubeCardVideo') {
+    return (
+      <YoutubeCardVideo
+        title={component.props?.title}
+        videoId={component.props?.videoId}
+        subscriptionLink={component.subscriptionLink}
+        subscriptionLinkLabel={component.subscriptionLinkLabel}
+        businessSlug={businessSlug}
+        businessId={data.businessId}
+        pageId={data._id}
+        component={component}
+      />
+    )
+  }
+
+  return <></>
+}
+
+// eslint-disable-next-line react/prop-types
+
+const AddNewItem = ({ addComponent, isOpen }) => {
+  const [currentTab, setCurrentTab] = useState('linkButton');
+const [addingItem, setAddingItem] = useState(false)
+  const action = async (componentValue) => {
+    setAddingItem(true)
+    try {
+      await addComponent(componentValue)
+    } catch (error) {
+      console.log(error)
+    }
+    setAddingItem(false)
+    isOpen(false)
+  }
+  
+
+  return (
+    <Box>
+     <Box display='flex' alignItems='center' justifyContent='center' m={2}>
+          <Typography variant='subtitle2'>Novo Item</Typography>
+
+        </Box>
+        <Tabs value={currentTab} onChange={(event, newValue) => setCurrentTab(newValue)}>
+            {TABS.map((tab) => (
+              <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
+            ))}
+          </Tabs>
+
+          {TABS.map(
+            (tab) =>
+              tab.value === currentTab && (
+                <Box key={tab.value}>
+                <Box sx={{ mt: 2 }}>
+                  {tab.component}
+                </Box>
+                <Box sx={{ mt: 2 }}>
+                  <LoadingButton loading={addingItem} variant='contained' onClick={() => action(tab.value)}>Adicionar {tab.label}</LoadingButton>
+                </Box>
+                </Box>
+              )
+          )}  
+    </Box>
+  )
+}
+
+// eslint-disable-next-line react/prop-types
+
+
 
 const EditSlug = ({ currentWorkspace, updateWorkspaces, isOpen }) => {
   const [slug, setSlug] = useState(currentWorkspace.businessId.slug);
@@ -1549,7 +1567,7 @@ const theme = useTheme()
     }
     if (type === 'linkButton') {
       const currentItemState = section.components?.find(component => component.componentId === props.componentId)
-      setDialogContent( <EditBlockLinkButton currentItemState={currentItemState} businessSlug={businessSlug} saveItemEdition={saveItemEdition} isOpen={setOpenEditItemBlock} />)
+      setDialogContent( <EditLinkButton currentItemState={currentItemState} businessSlug={businessSlug} saveItemEdition={saveItemEdition} isOpen={setOpenEditItemBlock} />)
     }
     if (type === 'paragraph') {
       const currentItemState = section.components?.find(component => component.componentId === props.componentId)
@@ -1730,7 +1748,7 @@ const theme = useTheme()
                 <Box key={component.componentId} mb={2} ml={1} mr={1}>
                 <Card  >
                 <Box mt={1} mb={1} >
-                        {buildComponent({ component, theme, businessSlug: 'fake_slug', businessId, setSettingVisible, settingVisible, data: myPageData })}
+                        {buildComponent({ component, theme, businessSlug: 'fake_slug', businessId, setSettingVisible, settingVisible, data: myPageData, saveItemEdition })}
                         <Box
                                     display='flex'
                                     alignItems='center'
