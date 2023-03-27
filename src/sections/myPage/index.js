@@ -244,7 +244,7 @@ export function MyPage({ business, loadedTheme }) {
      ))
   
     return (
-      <Box sx={{ backgroundColor: loadedTheme.pageBackGround.backgroundColor }}>
+      <Box>
         <Head>
           <title>{data.meta?.headTag?.title}</title>
           <meta name="description" content={data.meta?.headTag?.description} />

@@ -2024,7 +2024,7 @@ export default function MyPage() {
       <Container
         disableGutters
         maxWidth='sm'
-       sx={{ backgroundColor: '#DCDCDC' }}
+       sx={{ backgroundColor: '#F8F8F8' }}
       >
         <Box mb={2}>
           <Box sx={{ backgroundColor: 'common.white', p: 1}}>
@@ -2173,7 +2173,7 @@ export default function MyPage() {
         }
 
         {
-          currentTab === 'elementsSection' && <Box mt={4}>
+          currentTab === 'elementsSection' && <Box mt={4} pb={4}>
              {
          sections.length > 0 && sections.map((section, SectionIdx) => <Box key={section.sectionId.toString()} mb={4}>
           <Section setSettingSectionsVisible={setSettingSectionsVisible} settingSectionsVisible={settingSectionsVisible} upwardSection={upwardSection} downwardSection={downwardSection} SectionIdx={SectionIdx} sectionsLength={sections.length} section={section} businessSlug={currentWorkspace?.myPage?.pageSlug} businessId={currentWorkspace?.businessId?._id} data={currentWorkspace?.myPage} updateSection={updateSection} updateWorkspaces={updateWorkspaces}/>
