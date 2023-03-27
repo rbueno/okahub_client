@@ -53,7 +53,7 @@ export default function Footer() {
         py: 5,
         textAlign: 'center',
         position: 'relative',
-        bgcolor: 'background.default',
+        // bgcolor: 'background.default',
       }}
     >
       <Container>

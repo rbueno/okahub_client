@@ -67,6 +67,7 @@ import {
 } from '../sections/home';
 
 import { MyPage } from '../sections/myPage'
+import { useSettingsContext } from '../components/settings/SettingsContext';
 // ----------------------------------------------------------------------
 
 // UserProfilePage.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
@@ -168,6 +169,10 @@ export function LandingPage() {
   );
 }
 
+const loadedTheme = {
+  pageBackGround: {backgroundColor: '#eb3492'}
+};
+
 Home.propTypes = {
   business: PropTypes.object,
   client: PropTypes.string
@@ -178,14 +183,12 @@ export default function Home({ business, client }) {
   // useEffect(() => {
   //   push('/auth/login')
   // })
-  if (business.pageSlug) return <MyPage business={business} />
+  if (business.pageSlug) return <MyPage business={business} loadedTheme={loadedTheme} />
   if (business.iswww) return <LandingPage />
   return <LandingPage />
 }
 
 export const getServerSideProps = async (prop) => {
-
-  
 
 mongoose.connect(process.env.MONGODB_URI || '', {
   useNewUrlParser: true,
@@ -245,19 +248,7 @@ if (!myPage) {
 }
   
   try {
-    // const { data } = await api.get(`v1/mypage/${client}`)
-    // const result = await fetch(`https://www.okahub.com/api/mypage?${client}`)
-    // const result = await fetch(`https://www.okahub.com/api/mypage/${client}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    // const result = await axios.default.get(`https://www.okahub.com/api/mypage/${client}`)
-  // console.log('axios mypage fetch', result)
-  // const business = dataMock.find(item => item.businessSlug === 'meetmeat')
-  console.log('business ===========>', JSON.parse(JSON.stringify(myPage)))
+    
   return {
     props: {
       business: JSON.parse(JSON.stringify(myPage)),

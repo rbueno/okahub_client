@@ -27,6 +27,7 @@ import localStorageAvailable from '../../utils/localStorageAvailable';
 import { useAuthContext } from '../../auth/useAuthContext';
 import { CustomAvatar } from '../../components/custom-avatar'
 import Footer from '../../layouts/main/Footer';
+import MainLayout from '../../layouts/main';
 
 import MapComponent from './components/mapComponent'
 import GetContactComponent from './components/getContactComponent'
@@ -198,13 +199,15 @@ const availableThemeColorPresets = {
     return <></>
   }
 
-MyPage.getLayout = (page) => <> {page} </>;
+// MyPage.getLayout = (page) => <> {page} </>;
+// MyPage.getLayout = (page) => <MainLayout>{page}</MainLayout>;
 
 MyPage.propTypes = {
     business: PropTypes.object,
+    loadedTheme: PropTypes.object
   };
 
-export function MyPage({ business }) {
+export function MyPage({ business, loadedTheme }) {
     const { onChangeColorPresets } = useSettingsContext();
     const storageAvailable = localStorageAvailable();
     const data = business
@@ -241,58 +244,21 @@ export function MyPage({ business }) {
      ))
   
     return (
-      <>
+      <Box sx={{ backgroundColor: loadedTheme.pageBackGround.backgroundColor }}>
         <Head>
           <title>{data.meta?.headTag?.title}</title>
-      <meta name="description" content={data.meta?.headTag?.description} />
-      <link href={data.meta?.headTag?.websiteURL} rel="canonical" />
-  
-      <meta property="og:title" content={data.meta?.headTag?.ogTitle} />
-      <meta property="og:url" content={data.meta?.headTag?.websiteURL} />
-      <meta property="og:description" content={data.meta?.headTag?.description} />
-      <meta property="og:image" content={data.meta?.headTag?.image} />
-  
-      {/* {
-        microdata && microdata.product && (
-          <>
-            <meta property="og:price:amount" content={microdata.product.price.original} />
-            <meta property="og:price:currency" content="BRL" />
-  
-            <meta property="product:brand" content={microdata.business.businessName} />
-            <meta property="product:availability" content="in stock" />
-            <meta property="product:condition" content="new" />
-            <meta property="product:price:amount" content={microdata.product.price.original} />
-            <meta property="product:price:currency" content="BRL" />
-            <meta property="product:retailer_item_id" content={microdata.product._id} />
-  
-            {
-        microdata.product.price.sale && (
-          <>
-            <meta property="product:sale_price:amount" content={microdata.product.price.sale} />
-            <meta property="product:sale_price:currency" content="BRL" />
-          </>
-        )
-      }
-          </>
-        )
-      } */}
+          <meta name="description" content={data.meta?.headTag?.description} />
+          <link href={data.meta?.headTag?.websiteURL} rel="canonical" />
+      
+          <meta property="og:title" content={data.meta?.headTag?.ogTitle} />
+          <meta property="og:url" content={data.meta?.headTag?.websiteURL} />
+          <meta property="og:description" content={data.meta?.headTag?.description} />
+          <meta property="og:image" content={data.meta?.headTag?.image} />
         </Head>
-         {/* <Stack
-            spacing={2}
-            sx={{
-              //  mb: 3,
-              // p: theme.spacing(0, 0, 3, 0),
-              height: 150,
-              position: 'relative',
-              width: '100%'
-            }}
-          >
-            <ProfileCover name={data.name} description={data.description} avatar={data.avatarURL} coverImage={data.backgroundImage} coverColor={data.backgroundImage} />
-          </Stack> */}
   
           
-        <Container maxWidth='sm'>
-        <Box mt={4}>
+        <Container  maxWidth='sm'>
+        <Box pt={5}>
         <CustomAvatar
             src={data.avatarURL}
             alt={data.name}
@@ -337,6 +303,6 @@ export function MyPage({ business }) {
         
         </Container>
         <Footer />
-      </>
+      </Box>
     );
   }
