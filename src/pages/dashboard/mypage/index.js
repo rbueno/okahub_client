@@ -845,7 +845,7 @@ const EditParagraph = ({ currentItemState, saveItemEdition, isOpen, businessSlug
   const [showDeleteComponent, setShowDeleteComponent] = useState(false)
 
   function formatLink(rawLink) {
-    if(rawLink.startsWith('https://') || rawLink.startsWith('http://')) return rawLink
+    if(rawLink.toLowerCase().startsWith('https://') || rawLink.toLowerCase().startsWith('http://')) return rawLink
     
     return `http://${rawLink}`
   }
