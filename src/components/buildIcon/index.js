@@ -71,10 +71,10 @@ const availableIcons = [
   export function findLinkConfigByIconId(link){
     if(!link) return { id: null, color: null }
     const test = link.toLowerCase()
+    if (test.includes('whatsapp') || test.includes('wa.')) return { id: 'whatsapp', color: '#075e54' }
     if (test.includes('instagram')) return { id: 'instagram', color: '#E4405F' }
     if (test.includes('youtube')) return { id: 'youtube', color: '#FF0000' }
     if (test.includes('facebook')) return { id: 'facebook', color: '#3b5998' }
-    if (test.includes('whatsapp') || test.includes('wa.')) return { id: 'whatsapp', color: '#075e54' }
     if (test.includes('tiktok')) return 'camera'
     if (test.includes('telegram') || test.includes('t.me')) return { id: 'telegram', color: '#229ED9'}
     return { id: null, color: null }
