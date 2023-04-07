@@ -60,7 +60,7 @@ export default function AboutPage() {
   <p>Esta política de privacidade pode ser alterada de tempos em tempos e a versão atualizada será postada em nosso chatbot. O uso contínuo do nosso chatbot significa que o usuário concorda com nossa política de privacidade atualizada.</p>
 
   <h2>Contato</h2>
-  <p>Qualquer dúvida ou questionamento sobre esta política de privacidade pode ser enviado para nosso e-mail de contato.</p>
+  <p>Qualquer dúvida ou questionamento sobre esta política de privacidade pode ser enviado para nosso e-mail de contato: contato@okahub.com.</p>
 </main>
 
       </Container>
