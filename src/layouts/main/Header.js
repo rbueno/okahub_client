@@ -66,9 +66,9 @@ export default function Header() {
 
           {/* {isDesktop && <NavDesktop isOffset={isOffset} data={navConfig} />} */}
 
-          <Button variant="contained" target="_blank" rel="noopener" href='https://www.okahub.com/auth/register'>
+          {/* <Button variant="contained" target="_blank" rel="noopener" href='https://www.okahub.com/auth/register'>
             Criar conta
-          </Button>
+          </Button> */}
 
           {/* {!isDesktop && <NavMobile isOffset={isOffset} data={navConfig} />} */}
         </Container>
