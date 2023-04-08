@@ -70,7 +70,7 @@ export default function Header() {
             Criar conta
           </Button>
 
-          {!isDesktop && <NavMobile isOffset={isOffset} data={navConfig} />}
+          {/* {!isDesktop && <NavMobile isOffset={isOffset} data={navConfig} />} */}
         </Container>
       </Toolbar>
 
