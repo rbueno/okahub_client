@@ -149,7 +149,7 @@ const availableThemeColorPresets = {
       )
     }
   
-    if (component.type === 'googlemaps' && component.props.lat && component.props.lng && component.props.url) {
+    if (component.type === 'googlemaps' && component.props.iframeSRC) {
       return (
         <MapComponent
           lat={component.props.lat}
@@ -162,6 +162,7 @@ const availableThemeColorPresets = {
           businessId={data.businessId}
           pageId={data._id}
           eventEntry={eventEntry}
+          iframeSRC={component.props.iframeSRC}
         />
       )
     }

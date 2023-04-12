@@ -91,7 +91,7 @@
 import { useState } from 'react'
 import NextLink from 'next/link'
 import { GoogleMap, Marker, useLoadScript, InfoWindow } from '@react-google-maps/api'
-import { Button, Stack, Typography } from '@mui/material'
+import { Button, Stack, Typography, Box } from '@mui/material'
 
 const containerStyle = {
   width: '100%',
@@ -168,8 +168,21 @@ const HandleOnCloseClick = data => {
   )
 }
 export default function MapComponent(props) {
-  const { isLoaded } = useLoadScript({ googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY })
-  if (!isLoaded) return <>Carregando...</>
-  return <Map {...props} />
+  // const { isLoaded } = useLoadScript({ googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY })
+  // if (!isLoaded) return <>Carregando...</>
+  // return <Map {...props} />
+  return <Box>
+  {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
+  <iframe 
+            src={props.iframeSRC} 
+            width="100%" 
+            height="450" 
+            style={{ border: 0 }}
+            // allowfullscreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+   />
+  
+</Box>
 
 }

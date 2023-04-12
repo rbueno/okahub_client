@@ -465,6 +465,12 @@ const EditGoogleMaps = ({ currentItemState, saveItemEdition, isOpen, businessSlu
   console.log('currentItemState', currentItemState)
   console.log('businessSlug', businessSlug)
   const [name, setName] = useState(currentItemState.props?.name)
+  const [iframe, setIframe] = useState(() => {
+    if (!currentItemState.props?.iframeSRC) return ''
+
+    return `<iframe src="${currentItemState.props.iframeSRC}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`
+  })
+  const [iframeSRC, setIframeSRC] = useState(currentItemState.props?.iframeSRC || null)
   const [url, setURL] = useState(currentItemState.props?.url)
   const [cid, setCID] = useState(currentItemState.props?.cid)
   const [formattedAddress, setFormattedAddress] = useState(currentItemState.props?.formattedAddress)
@@ -493,6 +499,16 @@ const EditGoogleMaps = ({ currentItemState, saveItemEdition, isOpen, businessSlu
     },
     debounce: 300,
   })
+
+  const handleIframe = (e) => {
+    setIframe(e)
+
+    const regexIframe = /src="([^"]+)"/
+    const newIframeSRC = e.match(regexIframe)
+    if (newIframeSRC) setIframeSRC(newIframeSRC[1])
+    if (!newIframeSRC) setIframeSRC(null)
+    console.log('newIframeSRC', newIframeSRC && newIframeSRC[1])
+  }
   
 
   const action = async () => {
@@ -505,12 +521,7 @@ const EditGoogleMaps = ({ currentItemState, saveItemEdition, isOpen, businessSlu
       sectionId: currentItemState.sectionId,
       type: currentItemState.type,
       props: {
-        name,
-        url,
-        formattedAddress,
-        completeAddress: value,
-        lat,
-        lng
+        iframeSRC
         // subscriptionLink={component.subscriptionLink}
         // subscriptionLinkLabel={component.subscriptionLinkLabel}
         // channelLink={component.channelLink}
@@ -623,12 +634,12 @@ const EditGoogleMaps = ({ currentItemState, saveItemEdition, isOpen, businessSlu
         /> */}
             
         {/* <Script defer src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`} /> */}
-        <Script
+        {/* <Script
         defer
         src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&libraries=places&callback=Function.prototype`}
         strategy="lazyOnload"
         onReady={init}
-      />
+      /> */}
         {/* <div ref={ref}> */}
       {/* <input
         value={value}
@@ -640,11 +651,14 @@ const EditGoogleMaps = ({ currentItemState, saveItemEdition, isOpen, businessSlu
       {/* {status === "OK" && <ul>{renderSuggestions()}</ul>} */}
     {/* </div> */}
       <Box sx={{ paddingTop: 1, paddingBottom: 1 }}>
-        <TextField
+      <TextField
         fullWidth
-        value={value}
-        onChange={handleInput}
-        label="Nome do negócio ou endereço"
+        multiline
+        rows={3}
+        value={iframe}
+        onChange={(e) => handleIframe(e.target.value)}
+        label='Copir o iFrame do Google Maps'
+        placeholder="Irá funcionar apenas com iFrame do Google Maps"
         />
 
       {status === "OK" && <ul>{renderSuggestions()}</ul>}
@@ -665,7 +679,7 @@ const EditGoogleMaps = ({ currentItemState, saveItemEdition, isOpen, businessSlu
     >
       <LoadingButton fullWidth variant='outlined' color="error" onClick={() => setShowDeleteComponent(true)}>Deletar</LoadingButton>
 
-      <LoadingButton fullWidth variant='contained' color="success" loading={updatingComponent} onClick={() => action()}>Salvar</LoadingButton>
+      <LoadingButton disabled={!iframeSRC} fullWidth variant='contained' color="success" loading={updatingComponent} onClick={() => action()}>Salvar</LoadingButton>
 
     </Stack>
 
@@ -1107,6 +1121,7 @@ const buildComponent = ({component, theme, businessSlug, businessId, setSettingV
         businessSlug={businessSlug}
         businessId={data.businessId}
         pageId={data._id}
+        iframeSRC={component.props.iframeSRC}
       />
     )
   }
