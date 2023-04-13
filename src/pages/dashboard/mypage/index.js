@@ -1086,7 +1086,15 @@ const buildComponent = ({component, theme, businessSlug, businessId, setSettingV
           size="large"
           variant="contained"
           sx={{
-            backgroundColor: component.props?.color || theme.palette.primary.main
+            backgroundColor: component.props?.color || theme.palette.primary.main,
+            "& .MuiButton-endIcon": {
+              position: "absolute",
+              right: "1rem",
+          },
+          "& .MuiButton-startIcon": {
+              position: "absolute",
+              left: "1rem",
+          },
           }}
           // component={NextLink}
           href={component.props.link}
