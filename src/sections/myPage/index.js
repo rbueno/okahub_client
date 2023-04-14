@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect} from 'react'
 import Head from 'next/head';
 
-import { useTheme } from '@mui/material/styles';
+import { useTheme, alpha } from '@mui/material/styles';
 import {
     Stack,
     Typography,
@@ -109,51 +109,81 @@ const availableThemeColorPresets = {
     })
   }
 
-  const buildComponent = ({ component, theme, businessSlug, businessId, data }) => {
+  const buildComponent = ({ component, theme, businessSlug, businessId, data, loadedTheme }) => {
     const iconComponent = component.props?.icon?.id && availableIcons.find(item => item.iconId === component.props.icon.id)
   
     // <Button component={NextLink} href="/" size="large" variant="contained">
     //         Go to Home
     //       </Button>
   
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   if (!component?.props) return <></>
     if (component.type === 'linkButton' && component.props.link && component.props.text) {
-      console.log('component.props', component.props)
+      
+      let buttonHeight = ''
+      const buttonText = component.props?.text || ''
+
+      const lines = (buttonText.length || 40) / 40
+      console.log('lines', lines)
+      console.log('buttonText.legnth || 40', buttonText.length || 40)
+      console.log('buttonText.legnth / 40', (buttonText.length || 40) / 40)
+      if (lines >= 0 && lines < 1) buttonHeight = '55px'
+      if (lines >= 1 && lines < 2) buttonHeight = '90px'
+      if (lines >= 2 && lines < 3) buttonHeight = '115px'
+      if (lines >= 3 && lines < 4) buttonHeight = '145px'
+      if (lines >= 4 && lines < 5) buttonHeight = '200px'
+      console.log('buttonHeight', buttonHeight, component.props?.text)
       return (
         <Button
-              {...(iconComponent ? { startIcon: iconComponent.iconComponent } : {})}
-              //  startIcon={iconComponent.iconComponent}
-                  size="large"
-                  variant="contained"
-                  sx={{
-                    backgroundColor: component.props?.color || theme.palette.primary.main,
-                    "& .MuiButton-endIcon": {
-                      position: "absolute",
-                      right: "1rem",
-                  },
-                  "& .MuiButton-startIcon": {
-                      position: "absolute",
-                      left: "1rem",
-                  },
-                  }}
-                  // component={NextLink}
-                  href={component.props.link}
-                  // href={PATH_DOCS.root} 
-                  target="_blank"
-                  rel="noopener" 
-                  // disabled={false}
-                  onClick={() => eventEntry({ component, eventType: 'click', data })}
-                  // disabled={props?.data?.Celular ? false : true}
-                  // onClick={() => handleWhatsAppClick(props.data.Celular)} disableRipple
-                  disableRipple
-                >
-                  {component.props?.text}
-              </Button>
+        {...(iconComponent ? { startIcon: iconComponent.iconComponent } : {})}
+        //  startIcon={iconComponent.iconComponent}
+            size="large"
+            variant="contained"
+            sx={{
+              backgroundColor: alpha(loadedTheme.button.background.color, 0.90),
+              "& .MuiButton-endIcon": {
+                position: "absolute",
+                right: "1rem",
+            },
+            color: loadedTheme.button.text.color,
+            "& .MuiButton-startIcon": {
+                position: "absolute",
+                left: "1rem",
+            },
+            "&:hover": {
+              transition:'cubic-bezier(.07, 1.41, .82, 1.41) 0.2s',
+              transform: 'scale(1.02)',
+              backgroundColor: alpha(loadedTheme.button.background.color, 0.80),
+          },
+          height: buttonHeight
+            }}
+            // component={NextLink}
+            href={component.props.link}
+            // href={PATH_DOCS.root} 
+            target="_blank"
+            rel="noopener" 
+            // disabled={false}
+            onClick={() => eventEntry({ component, eventType: 'click', data })}
+            // disabled={props?.data?.Celular ? false : true}
+            // onClick={() => handleWhatsAppClick(props.data.Celular)} disableRipple
+            disableRipple
+          >
+            <Box paddingLeft={2} paddingRight={2} display='flex' textAlign='center'>
+              <Typography>{buttonText}</Typography>
+            </Box>
+        </Button>
       )
     }
     if (component.type === 'paragraph' && component.props.text) {
       return (
-        <Typography textAlign="center" variant="body2">{component.props.text}</Typography>
+        <Typography
+          textAlign="center"
+          variant="body2"
+          sx={{
+            color: loadedTheme.text.paragraph.color
+          }}
+          >
+            {component.props.text}</Typography>
       )
     }
   
@@ -243,17 +273,27 @@ export function MyPage({ business, loadedTheme }) {
             p: theme.spacing(3, 0, 3, 0),
           }}
         >
-            { section.title && <Typography textAlign="center" variant="h6">{section.title}</Typography>  }
+            { section.title && <Typography
+              textAlign="center"
+              variant="h6"
+              sx={{
+                color: loadedTheme.text.title.color
+              }}
+              >{section.title}</Typography>  }
               
             {
-              section.components && section.components.map(comp => buildComponent({ component: comp, theme, businessSlug: data.pageSlug, businessId: data.businessId, data }))
+              section.components && section.components.map(comp => buildComponent({ component: comp, theme, businessSlug: data.pageSlug, businessId: data.businessId, data, loadedTheme }))
             }
   
         </Stack>
      ))
   
     return (
-      <Box>
+      <Box
+      sx={{
+        backgroundColor: loadedTheme.pageBackGround.color
+      }}
+      >
         <Head>
           <title>{data.meta?.headTag?.title}</title>
           <meta name="description" content={data.meta?.headTag?.description} />
@@ -266,7 +306,12 @@ export function MyPage({ business, loadedTheme }) {
         </Head>
   
           
-        <Container  maxWidth='sm'>
+        <Container 
+          maxWidth='sm'
+          // sx={{
+          //   backgroundColor: '#191919'
+          // }}
+        >
         <Box pt={5}>
         <CustomAvatar
             src={data.avatarURL}
@@ -291,7 +336,14 @@ export function MyPage({ business, loadedTheme }) {
               textAlign: { xs: 'center', md: 'center' },
             }}
           >
-            <Typography variant="h4">{data.name}</Typography>
+            <Typography
+              variant="h4"
+              sx={{
+                color: loadedTheme.text.title.color
+              }}
+              >
+                {data.name}
+            </Typography>
           </Box>
           {
             data.description && <Box sx={{
@@ -300,7 +352,13 @@ export function MyPage({ business, loadedTheme }) {
               // color: 'common.white',
               textAlign: { xs: 'center', md: 'center' },
             }}>
-          <Typography textAlign="center" variant="body2">{data.description}</Typography>
+          <Typography
+            textAlign="center"
+            variant="body2"
+            sx={{
+              color: loadedTheme.text.paragraph.color
+            }}
+          >{data.description}</Typography>
           </Box>
           }
           
@@ -311,7 +369,7 @@ export function MyPage({ business, loadedTheme }) {
           
         
         </Container>
-        <Footer />
+        <Footer loadedTheme={loadedTheme}/>
       </Box>
     );
   }

@@ -170,7 +170,33 @@ export function LandingPage() {
 }
 
 const loadedTheme = {
-  pageBackGround: {backgroundColor: '#eb3492'}
+  pageBackGround: {
+    type: 'flatColor',
+    color: '#191919'
+  },
+  text: {
+    title: {
+      font: '',
+      size: '',
+      color: '#FFFFFF',
+    },
+    paragraph: {
+      font: '',
+      size: '',
+      color: '#FFFFFF',
+    },
+  },
+  button: {
+    background: {
+      type: 'solid',
+      color: '#FFFFFF',
+    },
+    text: {
+      font: '',
+      size: '',
+      color: '#191919'
+    }
+  }
 };
 
 Home.propTypes = {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 // next
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -40,7 +41,12 @@ const LINKS = [
 
 // ----------------------------------------------------------------------
 
-export default function Footer() {
+Footer.propTypes = {
+  loadedTheme: PropTypes.object
+};
+
+export default function Footer(props) {
+  const { loadedTheme } = props
   const { pathname } = useRouter();
 
   // const isHome = pathname === '/';
@@ -59,10 +65,18 @@ export default function Footer() {
       <Container>
         {/* <Logo sx={{ mb: 1, mx: 'auto' }} /> */}
 
-        <Typography variant="caption" component="div">
+        <Typography variant="caption" component="div"
+        sx={{
+          color: loadedTheme?.text?.paragraph?.color || '#191919'
+        }}
+        >
           © All rights reserved
           <br /> made by &nbsp;
-          <Link href="https://www.okahub.com/"> Okahub </Link>
+          <Link href="https://www.okahub.com/"
+          sx={{
+            color: loadedTheme?.text?.paragraph?.color || '#191919'
+          }}
+          > Okahub </Link>
         </Typography>
       </Container>
     </Box>
