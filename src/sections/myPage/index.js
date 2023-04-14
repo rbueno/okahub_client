@@ -299,6 +299,7 @@ export function MyPage({ business, loadedTheme }) {
           <meta name="description" content={data.meta?.headTag?.description} />
           <link href={data.meta?.headTag?.websiteURL} rel="canonical" />
       
+          <meta name="theme-color" content={loadedTheme.general.color} />
           <meta property="og:title" content={data.meta?.headTag?.ogTitle} />
           <meta property="og:url" content={data.meta?.headTag?.websiteURL} />
           <meta property="og:description" content={data.meta?.headTag?.description} />

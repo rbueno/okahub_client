@@ -170,6 +170,9 @@ export function LandingPage() {
 }
 
 const loadedTheme = {
+  general: {
+    color: '#191919'
+  },
   pageBackGround: {
     type: 'flatColor',
     color: '#191919'
