@@ -247,26 +247,30 @@ MyPage.propTypes = {
   };
 
 export function MyPage({ business, loadedTheme }) {
-    const { onChangeColorPresets } = useSettingsContext();
+    // const { onChangeColorPresets } = useSettingsContext();
     const storageAvailable = localStorageAvailable();
     const data = business
     // eslint-disable-next-line no-prototype-builtins
-    const colorPreset = data?.themeColor && availableThemeColorPresets.hasOwnProperty(data?.themeColor) ? data?.themeColor : 'default'
+    // const colorPreset = data?.themeColor && availableThemeColorPresets.hasOwnProperty(data?.themeColor) ? data?.themeColor : 'default'
     useEffect(() => {
       if (storageAvailable) {
-        onChangeColorPresets({ target: { value:  colorPreset }})
+        // onChangeColorPresets({ target: { value:  colorPreset }})
         localStorage.setItem('businessSlug', data.businessSlug)
       }
       eventEntry({ component: {}, eventType: 'view', data })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [storageAvailable, onChangeColorPresets, colorPreset, data.businessSlug]);
+    }, [
+      storageAvailable, 
+      // onChangeColorPresets, 
+      // colorPreset, 
+      data.businessSlug]);
   
-    
-    const { user } = useAuthContext();
+    // const { user } = useAuthContext();
     const theme = useTheme();
   
     const components = data.sections.map((section) => (
       <Stack
+          key={section.sectionId}
           spacing={2}
           direction="column"
           sx={{
