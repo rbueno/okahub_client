@@ -12,11 +12,11 @@ import { PlanFreeIcon, PlanStarterIcon, PlanPremiumIcon } from '../../assets/ico
 PricingPlanCard.propTypes = {
   sx: PropTypes.object,
   card: PropTypes.object,
-  index: PropTypes.number,
+  index: PropTypes.number
 };
 
 export default function PricingPlanCard({ card, index, sx, ...other }) {
-  const { subscription, price, caption, lists, labelAction } = card;
+  const { subscription, price, caption, lists, labelAction, simbol = '$', period = 'mo' } = card;
 
   return (
     <Card
@@ -34,7 +34,7 @@ export default function PricingPlanCard({ card, index, sx, ...other }) {
     >
       {index === 1 && (
         <Label color="info" sx={{ top: 16, right: 16, position: 'absolute' }}>
-          POPULAR
+          PREMIUM
         </Label>
       )}
 
@@ -43,13 +43,13 @@ export default function PricingPlanCard({ card, index, sx, ...other }) {
       </Typography>
 
       <Stack spacing={1} direction="row" sx={{ my: 2 }}>
-        {(index === 1 || index === 2) && <Typography variant="h5">$</Typography>}
+        {(index === 1 || index === 2) && <Typography variant="h5">{simbol}</Typography>}
 
         <Typography variant="h2">{price === 0 ? 'Free' : price}</Typography>
 
         {(index === 1 || index === 2) && (
           <Typography component="span" sx={{ alignSelf: 'center', color: 'text.secondary' }}>
-            /mo
+            /{period}
           </Typography>
         )}
       </Stack>
