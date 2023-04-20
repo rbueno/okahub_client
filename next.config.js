@@ -31,6 +31,8 @@ module.exports = withTM({
     AUTH0_DOMAIN: '',
     AUTH0_CLIENT_ID: '',
     GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-    MONGODB_URI: process.env.NEXT_PUBLIC_MONGODB_URI
+    MONGODB_URI: process.env.NEXT_PUBLIC_MONGODB_URI,
+    // STRIPE
+    STRIPE_PUBLISHABLE_KEY: process.env.NEXT_STRIPE_PUBLISHABLE_KEY
   },
 });
