@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useEffect, useState, useCallback } from 'react';
 // next
 import Head from 'next/head';
@@ -8,7 +7,7 @@ import { Box, Divider, Stack, Container, Typography, Pagination } from '@mui/mat
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // utils
-// import axios from '../../../../utils/axios';
+import axios from '../../../../utils/axios';
 // layouts
 import DashboardLayout from '../../../../layouts/dashboard';
 // components
@@ -48,9 +47,10 @@ export default function BlogPostPage() {
 
   const getPost = useCallback(async () => {
     try {
-      const response = await axios.get(`https://api-prod-minimal-v4.vercel.app/api/blog/post?title=apply-these-7-secret-techniques-to-improve-event`);
+      const response = await axios.get('/api/blog/post', {
+        params: { title },
+      });
 
-      console.log('response.data.post', response.data.post)
       setPost(response.data.post);
       setLoadingPost(false);
     } catch (error) {
@@ -58,7 +58,7 @@ export default function BlogPostPage() {
       setLoadingPost(false);
       setErrorMsg(error.message);
     }
-  }, []);
+  }, [title]);
 
   const getRecentPosts = useCallback(async () => {
     try {

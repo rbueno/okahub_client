@@ -75,6 +75,18 @@ export const PATH_DASHBOARD = {
     edit: (name) => path(ROOTS_DASHBOARD, `/user/${name}/edit`),
     demoEdit: path(ROOTS_DASHBOARD, `/user/reece-chung/edit`),
   },
+  facebookAds: {
+    root: path(ROOTS_DASHBOARD, '/facebook-ads'),
+    new: path(ROOTS_DASHBOARD, '/facebook-ads/new'),
+    list: path(ROOTS_DASHBOARD, '/facebook-ads/list'),
+    content: (adId) => path(ROOTS_DASHBOARD, `/facebook-ads/gen/${adId}`),
+  },
+  googleAds: {
+    root: path(ROOTS_DASHBOARD, '/google-ads'),
+    new: path(ROOTS_DASHBOARD, '/google-ads/new'),
+    list: path(ROOTS_DASHBOARD, '/google-ads/list'),
+    content: (adId) => path(ROOTS_DASHBOARD, `/google-ads/gen/${adId}`),
+  },
   business: {
     root: path(ROOTS_DASHBOARD, '/business'),
     new: path(ROOTS_DASHBOARD, '/business/new'),

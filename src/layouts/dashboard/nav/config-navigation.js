@@ -1,3 +1,5 @@
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GoogleIcon from '@mui/icons-material/Google';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
@@ -37,9 +39,120 @@ const ICONS = {
 
 const navConfig = [
   {
+    subheader: 'Página do Negócio',
     items: [
       { title: 'Métricas', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
-      { title: 'Editar página', path: PATH_DASHBOARD.mypage.main, icon: ICONS.dashboard },
+      { title: 'Editar', path: PATH_DASHBOARD.mypage.main, icon: ICONS.dashboard },
+      // {
+      //   title: 'Página do Negócio',
+      //   path: PATH_DASHBOARD.business.contextEdit,
+      //   icon: ICONS.banking,
+      //   children: [
+      //     { title: 'Métricas', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
+      //     { title: 'Editar', path: PATH_DASHBOARD.mypage.main, icon: ICONS.dashboard },
+      //   ],
+      // },
+      // {
+      //   title: 'usuários',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+      //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+      //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+      //   ],
+      // },
+    ],
+  },
+  {
+    subheader: 'Gerar anúncio com GPT',
+    items: [
+      {
+        title: 'Facebook / anúncios',
+        path: PATH_DASHBOARD.facebookAds.root,
+        icon: <FacebookIcon />,
+        children: [
+          // { title: 'todos', path: PATH_DASHBOARD.business.list },
+          { title: 'Gerar Anúncio', path: PATH_DASHBOARD.facebookAds.new },
+          { title: 'Histórico de anúncios', path: PATH_DASHBOARD.facebookAds.list },
+        ],
+      },
+      {
+        title: 'Google / anúncios',
+        path: PATH_DASHBOARD.googleAds.root,
+        icon: <GoogleIcon />,
+        children: [
+          // { title: 'todos', path: PATH_DASHBOARD.business.list },
+          { title: 'Gerar Anúncio', path: PATH_DASHBOARD.googleAds.new },
+          { title: 'Histórico de anúncios', path: PATH_DASHBOARD.googleAds.list },
+        ],
+      },
+      // {
+      //   title: 'Copys',
+      //   path: PATH_DASHBOARD.business.root,
+      //   icon: ICONS.banking,
+      //   children: [
+      //     // { title: 'todos', path: PATH_DASHBOARD.business.list },
+      //     { title: 'editar', path: PATH_DASHBOARD.business.contextEdit },
+      //     { title: 'criar novo', path: PATH_DASHBOARD.business.new },
+      //   ],
+      // },
+      // {
+      //   title: 'redes sociais',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+      //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+      //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+      //   ],
+      // },
+      // {
+      //   title: 'Youtube',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+      //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+      //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+      //   ],
+      // },
+      // {
+      //   title: 'Blog',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+      //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+      //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+      //   ],
+      // },
+      // {
+      //   title: 'Ecommerce',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+      //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+      //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+      //   ],
+      // },
+      // {
+      //   title: 'Email',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+      //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+      //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+      //   ],
+      // },
+    ],
+  },
+  
+  {
+    subheader: 'Gerenciar acesso',
+    items: [
       {
         title: 'usuários',
         path: PATH_DASHBOARD.user.root,
@@ -52,33 +165,6 @@ const navConfig = [
       },
     ],
   },
-  // {
-  //   subheader: 'Gerenciamento',
-  //   items: [
-  //     // {
-  //     //   title: 'negócio',
-  //     //   path: PATH_DASHBOARD.business.root,
-  //     //   icon: ICONS.banking,
-  //     //   children: [
-  //     //     // { title: 'todos', path: PATH_DASHBOARD.business.list },
-  //     //     { title: 'editar', path: PATH_DASHBOARD.business.contextEdit },
-  //     //     { title: 'criar novo', path: PATH_DASHBOARD.business.new },
-  //     //   ],
-  //     // },
-  //     // {
-  //     //   title: 'usuários',
-  //     //   path: PATH_DASHBOARD.user.root,
-  //     //   icon: ICONS.user,
-  //     //   children: [
-  //     //     { title: 'todos', path: PATH_DASHBOARD.user.list },
-  //     //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
-  //     //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
-  //     //   ],
-  //     // },
-  //   ],
-  // },
-  
-  
 
   
 ];

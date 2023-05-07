@@ -169,38 +169,78 @@ export function LandingPage() {
   );
 }
 
-const loadedTheme = {
-  general: {
-    color: '#191919'
+const loadedTheme = [
+  {
+    template: 'black',
+    setting: {
+      general: {
+        color: '#191919'
+      },
+      pageBackGround: {
+        type: 'flatColor',
+        color: '#191919'
+      },
+      text: {
+        title: {
+          font: '',
+          size: '',
+          color: '#FFFFFF',
+        },
+        paragraph: {
+          font: '',
+          size: '',
+          color: '#FFFFFF',
+        },
+      },
+      button: {
+        background: {
+          type: 'solid',
+          color: '#FFFFFF',
+        },
+        text: {
+          font: '',
+          size: '',
+          color: '#191919'
+        }
+      }
+    }
   },
-  pageBackGround: {
-    type: 'flatColor',
-    color: '#191919'
-  },
-  text: {
-    title: {
-      font: '',
-      size: '',
-      color: '#FFFFFF',
-    },
-    paragraph: {
-      font: '',
-      size: '',
-      color: '#FFFFFF',
-    },
-  },
-  button: {
-    background: {
-      type: 'solid',
-      color: '#FFFFFF',
-    },
-    text: {
-      font: '',
-      size: '',
-      color: '#191919'
+  {
+    template: 'white',
+    setting: {
+      general: {
+        color: '#FFFFFF'
+      },
+      pageBackGround: {
+        type: 'flatColor',
+        color: '#FFFFFF'
+      },
+      text: {
+        title: {
+          font: '',
+          size: '',
+          color: '#FFFFFF',
+        },
+        paragraph: {
+          font: '',
+          size: '',
+          color: '#191919',
+        },
+      },
+      button: {
+        background: {
+          type: 'solid',
+          color: '#191919',
+        },
+        text: {
+          font: '',
+          size: '',
+          color: '#FFFFFF'
+        }
+      }
     }
   }
-};
+]
 
 Home.propTypes = {
   business: PropTypes.object,
@@ -212,7 +252,7 @@ export default function Home({ business, client }) {
   // useEffect(() => {
   //   push('/auth/login')
   // })
-  if (business.pageSlug) return <MyPage business={business} loadedTheme={loadedTheme} />
+  if (business.pageSlug) return <MyPage business={business} loadedTheme={loadedTheme[1].setting} />
   if (business.iswww) return <LandingPage />
   return <LandingPage />
 }
