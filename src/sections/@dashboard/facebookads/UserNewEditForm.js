@@ -72,11 +72,9 @@ export default function BusinessEdit({ editingWorkspace }) {
   }
 
   function stopSec() {
-    if (secRunning) {
-      setSecRunning(false);
-      resetSec()
-      clearInterval(intervalRef.current);
-    }
+    setSecRunning(false);
+    resetSec()
+    clearInterval(intervalRef.current);
   }
   
 
@@ -98,15 +96,25 @@ export default function BusinessEdit({ editingWorkspace }) {
     // }, 1000);
 
     try {
-      const response = await api.post('v1/adgenerator/facebook', data)
+
+      
+      const responseProccesCreated = await api.post('v1/adgenerator/facebook', data)
       // const { workspaceSession } = response.data
 
+      // eslint-disable-next-line consistent-return
+      const fetchResponse = async (adId, delay = 15000) => {
+        await new Promise((resolve) => setTimeout(resolve, delay))
+        const result = await api.get(`/v1/adgenerator/facebook/${adId}`)
+        if (result.data.ad?.adContent && result.data.ad?.adContent.length > 0) return result.data.ad
+         return fetchResponse(adId, 5000)
+      }
+      const responseAd =  await fetchResponse(responseProccesCreated.data.newAds._id)
       // updateWorkspaces(workspaceSession)
       // updateWorkspaces(workspaceSession)
 
-      console.log('response.data', response.data.newAds)
-      setNewAdsGenerated(response.data.newAds)
-      enqueueSnackbar(`${response.data.newAds?.adContent?.length} Anúncios gerados`);
+      console.log('responseAd', responseAd)
+      setNewAdsGenerated(responseAd)
+      enqueueSnackbar(`${responseAd?.adContent?.length} Anúncios gerados`);
     } catch (error) {
       enqueueSnackbar(error.message && error.message, { variant: 'error' });
       console.error(error);

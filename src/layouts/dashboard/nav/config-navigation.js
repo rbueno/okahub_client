@@ -1,5 +1,7 @@
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
+import WebIcon from '@mui/icons-material/Web';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
@@ -39,10 +41,15 @@ const ICONS = {
 
 const navConfig = [
   {
+    items: [
+      { title: 'Dashboard', path: PATH_DASHBOARD.root, icon: ICONS.dashboard },
+    ],
+  },
+  {
     subheader: 'Página do Negócio',
     items: [
-      { title: 'Métricas', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
-      { title: 'Editar', path: PATH_DASHBOARD.mypage.main, icon: ICONS.dashboard },
+      { title: 'Métricas', path: PATH_DASHBOARD.general.analytics, icon: <LeaderboardIcon /> },
+      { title: 'Editar', path: PATH_DASHBOARD.mypage.main, icon: <WebIcon /> },
       // {
       //   title: 'Página do Negócio',
       //   path: PATH_DASHBOARD.business.contextEdit,
