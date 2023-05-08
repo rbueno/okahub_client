@@ -285,7 +285,7 @@ export default function GeneralAnalyticsPage() {
         {/* <FetchController /> */}
 
         <Box mb={4}>
-        <Typography variant='h5' sx={{ mb: 2 }}>Gere conteúdo com inteligência artifical</Typography>
+        <Typography variant='h5' sx={{ mb: 2 }}>Gere anúncios com inteligência artifical</Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
             <Box
