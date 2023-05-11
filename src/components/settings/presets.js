@@ -6,11 +6,11 @@ import palette from '../../theme/palette';
 const themePalette = palette('light');
 
 export const presets = [
-  // // DEFAULT
-  // {
-  //   name: 'default',
-  //   ...themePalette.primary,
-  // },
+  // DEFAULT
+  {
+    name: 'default',
+    ...themePalette.primary,
+  },
   // // CYAN
   // {
   //   name: 'cyan',
