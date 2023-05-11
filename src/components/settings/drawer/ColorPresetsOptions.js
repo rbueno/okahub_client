@@ -11,13 +11,28 @@ import { StyledCard, StyledWrap, MaskControl, StyledCircleColor } from '../style
 import api from '../../../utils/axios'
 import { useAuthContext } from '../../../auth/useAuthContext'
 
+const templates = [
+  {
+    name: 'black',
+    main: '#191919',
+    value: '#191919',
+  },
+  // white
+  {
+    name: 'white',
+    main: '#FFFFFF',
+    value: '#FFFFFF',
+  },
+]
 // ----------------------------------------------------------------------
 
 ColorPresetsOptions.propTypes = {
-  setIsUpdatingColor: PropTypes.func
+  setIsUpdatingColor: PropTypes.func,
+  themeSelected: PropTypes.object
 }
 
-export default function ColorPresetsOptions({ setIsUpdatingColor }) {
+export default function ColorPresetsOptions({ setIsUpdatingColor, themeSelected }) {
+  console.log('themeSelected', themeSelected)
   const { themeColorPresets, onChangeColorPresets, presetsOption } = useSettingsContext();
   const { updateWorkspaces } = useAuthContext()
   const { enqueueSnackbar } = useSnackbar();
@@ -55,10 +70,11 @@ export default function ColorPresetsOptions({ setIsUpdatingColor }) {
   return (
     <RadioGroup name="themeColorPresets" value={themeColorPresets} onChange={handleOnChangeColorPresets}>
       <StyledWrap sx={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
-        {presetsOption.map((color) => {
+        {templates.map((color) => {
           const { name, value } = color;
-
-          const selected = themeColorPresets === name;
+console.log('color', { name, value })
+const selected = themeSelected?.theme?.templateId === name;
+console.log('selected', selected)
 
           return (
             <StyledCard

@@ -2221,7 +2221,7 @@ export default function MyPage() {
               <CircularProgress color="info" />
               </Box>
               }
-            { !isUpdatingColor && <ColorPresetsOptions setIsUpdatingColor={setIsUpdatingColor} />}
+            { !isUpdatingColor && <ColorPresetsOptions themeSelected={currentWorkspace?.myPage} setIsUpdatingColor={setIsUpdatingColor} />}
             </Box>
         </Box>
           
