@@ -2227,8 +2227,6 @@ export default function MyPage() {
           
         }
 
-       
-
       </Container>
       <EditBlockTitleDialog open={openEditItemBlock} content={dialogContent} onClose={() => setOpenEditItemBlock(false)}/>
       <PreviewDialog open={preview} onClose={setPreview} page={currentWorkspace?.myPage} handleOpenShareOptions={handleOpenShareOptions} />

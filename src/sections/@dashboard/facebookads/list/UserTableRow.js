@@ -76,7 +76,8 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
           </Label></TableCell>
 
         <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-        {format(new Date(createdAt), 'dd/mm/yy')}
+        {format(new Date(createdAt), 'dd/MM/yy')}
+        {/* {fDate(createdAt)} */}
         
         </TableCell>
         {/* <TableCell>{format(new Date(row.checkIn), 'dd MMM yyyy')}</TableCell> */}
