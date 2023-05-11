@@ -33,6 +33,81 @@ import MapComponent from './components/mapComponent'
 import GetContactComponent from './components/getContactComponent'
 import YoutubeCardVideo from './components/youtubeCardVideo'
 
+const templates = [
+  {
+    templateId: 'black',
+    setting: {
+      general: {
+        color: '#191919'
+      },
+      pageBackGround: {
+        type: 'flatColor',
+        color: '#191919'
+      },
+      text: {
+        title: {
+          font: '',
+          size: '',
+          color: '#FFFFFF',
+        },
+        paragraph: {
+          font: '',
+          size: '',
+          color: '#FFFFFF',
+        },
+      },
+      button: {
+        background: {
+          type: 'solid',
+          color: '#FFFFFF',
+        },
+        text: {
+          font: '',
+          size: '',
+          color: '#191919'
+        }
+      }
+    }
+  },
+  {
+    templateId: 'white',
+    setting: {
+      general: {
+        color: '#FFFFFF'
+      },
+      pageBackGround: {
+        type: 'flatColor',
+        color: '#FFFFFF'
+      },
+      text: {
+        title: {
+          font: '',
+          size: '',
+          color: '#191919',
+        },
+        paragraph: {
+          font: '',
+          size: '',
+          color: '#191919',
+        },
+      },
+      button: {
+        background: {
+          type: 'solid',
+          color: '#191919',
+        },
+        text: {
+          font: '',
+          size: '',
+          color: '#FFFFFF'
+        }
+      }
+    }
+  }
+]
+
+const defaultTheme = templates[1].setting
+
 const availableThemeColorPresets = {
     default: 'default',
     cyan: 'cyan',
@@ -242,14 +317,14 @@ const availableThemeColorPresets = {
 // MyPage.getLayout = (page) => <MainLayout>{page}</MainLayout>;
 
 MyPage.propTypes = {
-    business: PropTypes.object,
-    loadedTheme: PropTypes.object
+    business: PropTypes.object
   };
 
-export function MyPage({ business, loadedTheme }) {
+export function MyPage({ business }) {
     // const { onChangeColorPresets } = useSettingsContext();
     const storageAvailable = localStorageAvailable();
     const data = business
+    const loadedTheme = data.theme || defaultTheme
     // eslint-disable-next-line no-prototype-builtins
     // const colorPreset = data?.themeColor && availableThemeColorPresets.hasOwnProperty(data?.themeColor) ? data?.themeColor : 'default'
     useEffect(() => {
