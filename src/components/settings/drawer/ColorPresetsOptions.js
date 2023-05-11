@@ -23,20 +23,25 @@ export default function ColorPresetsOptions({ setIsUpdatingColor }) {
   const { enqueueSnackbar } = useSnackbar();
   const handleOnChangeColorPresets = async (e) => {
     const payload ={
-      themeColor: e.target.value
+      theme: {
+        isTemplate: true,
+        templateId: e?.target?.value || 'black'
+      },
+      // themeColor: e.target.value
     }
 
     try {
       setIsUpdatingColor(true)
-      const response = await api.put('v1/business/themecolor', payload)
+      const response = await api.put('v1/business/theme', payload)
       
       const { workspaceSession } = response.data
       updateWorkspaces(workspaceSession)
-      onChangeColorPresets(e)
+      // onChangeColorPresets(e)
       enqueueSnackbar('Cor alterada!');
       // isOpen(false)
     } catch (error) {
-      enqueueSnackbar(error.message && error.message, { variant: 'error' });
+      const message = typeof error === 'string' ? error : error.message
+      enqueueSnackbar(message, { variant: 'error' });
       console.error(error);
     }
     setIsUpdatingColor(false)

@@ -324,7 +324,7 @@ export function MyPage({ business }) {
     // const { onChangeColorPresets } = useSettingsContext();
     const storageAvailable = localStorageAvailable();
     const data = business
-    const loadedTheme = data.theme || defaultTheme
+    const loadedTheme = data.theme?.setting || defaultTheme
     // eslint-disable-next-line no-prototype-builtins
     // const colorPreset = data?.themeColor && availableThemeColorPresets.hasOwnProperty(data?.themeColor) ? data?.themeColor : 'default'
     useEffect(() => {
