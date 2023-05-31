@@ -4,17 +4,22 @@ import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Stack, IconButton, InputAdornment, Alert } from '@mui/material';
+import { Stack, IconButton, InputAdornment, Alert, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import PropTypes from 'prop-types'
 // auth
 import { useAuthContext } from '../../auth/useAuthContext';
 // components
 import Iconify from '../../components/iconify';
 import FormProvider, { RHFTextField } from '../../components/hook-form';
+import Textfields from '../_examples/mui/Textfields';
 
 // ----------------------------------------------------------------------
 
-export default function AuthRegisterForm() {
+AuthRegisterForm.propTypes = {
+  phoneNumber: PropTypes.string
+}
+export default function AuthRegisterForm({ phoneNumber }) {
   const { register } = useAuthContext();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -52,7 +57,7 @@ export default function AuthRegisterForm() {
   const onSubmit = async (data) => {
     try {
       if (register) {
-        await register(data.email, data.password, data.firstName, data.lastName);
+        await register(data.email, data.password, data.firstName, data.lastName, phoneNumber);
       }
     } catch (error) {
       console.error(error);
@@ -108,6 +113,14 @@ export default function AuthRegisterForm() {
             ),
           }}
         />
+        {
+          phoneNumber && <TextField
+          disabled
+          value={phoneNumber}
+          />
+        }
+
+        
 
         <LoadingButton
           fullWidth

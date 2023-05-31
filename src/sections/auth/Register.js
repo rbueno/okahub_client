@@ -2,6 +2,7 @@
 import NextLink from 'next/link';
 // @mui
 import { Stack, Typography, Link } from '@mui/material';
+import PropTypes from 'prop-types'
 // layouts
 import LoginLayout from '../../layouts/login';
 // routes
@@ -12,7 +13,10 @@ import AuthRegisterForm from './AuthRegisterForm';
 
 // ----------------------------------------------------------------------
 
-export default function Register() {
+Register.propTypes = {
+  phoneNumber: PropTypes.string
+}
+export default function Register({ phoneNumber }) {
   return (
     <LoginLayout title="Converta seguidores em leads">
       <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
@@ -27,7 +31,7 @@ export default function Register() {
         </Stack>
       </Stack>
 
-      <AuthRegisterForm />
+      <AuthRegisterForm phoneNumber={phoneNumber} />
 
       {/* <Typography
         component="div"
