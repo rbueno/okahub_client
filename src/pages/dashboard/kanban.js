@@ -107,7 +107,7 @@ export default function KanbanPage() {
   return (
     <>
       <Head>
-        <title> Kanban | Okahub UI</title>
+        <title> Kanban | Okahub</title>
       </Head>
 
       <Container maxWidth={false} sx={{ height: 1 }}>

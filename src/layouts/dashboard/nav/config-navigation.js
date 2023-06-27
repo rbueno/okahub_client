@@ -72,6 +72,91 @@ const navConfig = [
     ],
   },
   {
+    subheader: 'Benchmark',
+    items: [
+      {
+        title: 'Instagram',
+        path: PATH_DASHBOARD.benchmark.instagram.rank,
+        icon: <FacebookIcon />,
+        children: [
+          // { title: 'todos', path: PATH_DASHBOARD.business.list },
+          { title: 'Rank', path: PATH_DASHBOARD.benchmark.instagram.rank },
+          { title: 'Adicionar conta', path: PATH_DASHBOARD.benchmark.instagram.new },
+        ],
+      },
+      // {
+      //   title: 'Google / anúncios',
+      //   path: PATH_DASHBOARD.googleAds.root,
+      //   icon: <GoogleIcon />,
+      //   children: [
+      //     // { title: 'todos', path: PATH_DASHBOARD.business.list },
+      //     { title: 'Gerar Anúncio', path: PATH_DASHBOARD.googleAds.new },
+      //     { title: 'Histórico de anúncios', path: PATH_DASHBOARD.googleAds.list },
+      //   ],
+      // },
+      // {
+      //   title: 'Copys',
+      //   path: PATH_DASHBOARD.business.root,
+      //   icon: ICONS.banking,
+      //   children: [
+      //     // { title: 'todos', path: PATH_DASHBOARD.business.list },
+      //     { title: 'editar', path: PATH_DASHBOARD.business.contextEdit },
+      //     { title: 'criar novo', path: PATH_DASHBOARD.business.new },
+      //   ],
+      // },
+      // {
+      //   title: 'redes sociais',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+      //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+      //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+      //   ],
+      // },
+      // {
+      //   title: 'Youtube',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+      //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+      //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+      //   ],
+      // },
+      // {
+      //   title: 'Blog',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+      //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+      //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+      //   ],
+      // },
+      // {
+      //   title: 'Ecommerce',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+      //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+      //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+      //   ],
+      // },
+      // {
+      //   title: 'Email',
+      //   path: PATH_DASHBOARD.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+      //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+      //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+      //   ],
+      // },
+    ],
+  },
+  {
     subheader: 'Gerar anúncio com GPT',
     items: [
       {

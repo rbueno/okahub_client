@@ -38,7 +38,7 @@ export default function GeneralBankingPage() {
   return (
     <>
       <Head>
-        <title> General: Banking | Okahub UI</title>
+        <title> General: Banking | Okahub</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>

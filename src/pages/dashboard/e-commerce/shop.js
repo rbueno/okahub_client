@@ -92,7 +92,7 @@ export default function EcommerceShopPage() {
   return (
     <>
       <Head>
-        <title> Ecommerce: Shop | Okahub UI</title>
+        <title> Ecommerce: Shop | Okahub</title>
       </Head>
 
       <FormProvider methods={methods}>

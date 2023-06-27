@@ -88,6 +88,14 @@ export const PATH_DASHBOARD = {
     list: path(ROOTS_DASHBOARD, '/google-ads/list'),
     content: (adId) => path(ROOTS_DASHBOARD, `/google-ads/gen/${adId}`),
   },
+  benchmark: {
+    instagram: {
+      root: path(ROOTS_DASHBOARD, '/benchmark/instagram/rank'),
+      new: path(ROOTS_DASHBOARD, '/benchmark/instagram/new'),
+      rank: path(ROOTS_DASHBOARD, '/benchmark/instagram/rank'),
+      content: (adId) => path(ROOTS_DASHBOARD, `/benchmark/instagram/${adId}/analytics`),
+    },
+  },
   business: {
     root: path(ROOTS_DASHBOARD, '/business'),
     new: path(ROOTS_DASHBOARD, '/business/new'),

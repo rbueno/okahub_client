@@ -24,7 +24,7 @@ export default function InvoiceCreatePage() {
   return (
     <>
       <Head>
-        <title> Invoices: Create a new invoice | Okahub UI</title>
+        <title> Invoices: Create a new invoice | Okahub</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

@@ -18,7 +18,7 @@ export default function BlankPage() {
   return (
     <>
       <Head>
-        <title> Blank Page | Okahub UI</title>
+        <title> Blank Page | Okahub</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>

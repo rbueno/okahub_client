@@ -248,7 +248,7 @@ export default function CalendarPage() {
   return (
     <>
       <Head>
-        <title> Calendar | Okahub UI</title>
+        <title> Calendar | Okahub</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>

@@ -85,7 +85,7 @@ export default function BlogPostPage() {
   return (
     <>
       <Head>
-        <title>{`Blog: ${post?.title || ''} | Okahub UI`}</title>
+        <title>{`Blog: ${post?.title || ''} | Okahub`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

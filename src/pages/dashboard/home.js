@@ -274,7 +274,7 @@ export default function GeneralAnalyticsPage() {
   return (
     <>
       <Head>
-        <title> Dashboard | Okahub UI</title>
+        <title> Dashboard | Okahub</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>

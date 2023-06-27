@@ -18,7 +18,8 @@ import {
   IconButton,
   TableContainer,
   Typography,
-  Box
+  Box,
+  Stack
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -126,11 +127,33 @@ export default function UserListPage() {
   return (
     <>
       <Head>
-        <title> User: List | Okahub UI</title>
+        <title> User: List | Okahub</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
-      <Typography variant="h4" sx={{ mb: 5}}>Usuários adicionados</Typography>
+      <Box sx={{ mb: 5 }}>
+          <Stack direction="row" alignItems="center">
+            <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="h4" gutterBottom>
+                  Facebook Ads
+                </Typography>
+            <Typography variant="body1" gutterBottom>
+                  histórico
+                </Typography>
+            </Box>
+
+            <Box sx={{ flexShrink: 0 }}> 
+            <Button
+                  component={NextLink}
+                  href={PATH_DASHBOARD.facebookAds.new}
+                  variant="contained"
+                  startIcon={<Iconify icon="eva:plus-fill" />}
+                >
+                  Criar anúncio
+                </Button>
+            </Box>
+          </Stack>
+        </Box>
         
 
         <Card>

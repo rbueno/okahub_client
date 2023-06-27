@@ -194,7 +194,7 @@ export default function FileManagerPage() {
   return (
     <>
       <Head>
-        <title> File Manager | Okahub UI</title>
+        <title> File Manager | Okahub</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

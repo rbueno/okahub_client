@@ -24,7 +24,7 @@ export default function EcommerceProductCreatePage() {
   return (
     <>
       <Head>
-        <title> Ecommerce: Create a new product | Okahub UI</title>
+        <title> Ecommerce: Create a new product | Okahub</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

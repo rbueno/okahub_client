@@ -41,7 +41,7 @@ export default function GeneralBookingPage() {
   return (
     <>
       <Head>
-        <title> General: Booking | Okahub UI</title>
+        <title> General: Booking | Okahub</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>

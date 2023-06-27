@@ -47,7 +47,7 @@ export default function GeneralEcommercePage() {
   return (
     <>
       <Head>
-        <title> General: E-commerce | Okahub UI</title>
+        <title> General: E-commerce | Okahub</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>

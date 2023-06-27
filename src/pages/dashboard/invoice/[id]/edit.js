@@ -33,7 +33,7 @@ export default function InvoiceEditPage() {
   return (
     <>
       <Head>
-        <title> Invoice: Edit | Okahub UI</title>
+        <title> Invoice: Edit | Okahub</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
