@@ -10,7 +10,8 @@
   "extends": [
     "airbnb",
     "airbnb/hooks",
-    "prettier"
+    "prettier",
+    "next"
   ],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
@@ -28,6 +29,8 @@
     }
   },
   "rules": {
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off",
     "no-alert": 0,
     "camelcase": 0,
     "no-console": 0,
