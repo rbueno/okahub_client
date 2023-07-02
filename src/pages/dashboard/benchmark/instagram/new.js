@@ -44,13 +44,21 @@ export default function UserCardsPage() {
   const { themeStretch } = useSettingsContext();
   const [showPreview, setShowPreview] = useState(false)
   const [showDeletarSection, setShowDeletarSection] = useState(null)
-  const [updatingComponent, setUpdatingComponent] = useState(false)
+  const [updatingComponent, setUpdatingComponent] = useState({
+    verifyProfile: false,
+    addProfile: false,
+    deleteProfile: false
+  })
   const [profileData, setProfileData] = useState({})
   const [username, setUsername] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [profiles, setProfiles] = useState([])
 
   const getProfile = async () => {
+    setUpdatingComponent({
+      ...updatingComponent,
+      verifyProfile: true
+    })
     try {
       const response = await api.get(`/v1/benchmark/instagram/ig-profile/${username}`)
       console.log('response ads', response.data)
@@ -60,8 +68,16 @@ export default function UserCardsPage() {
       if(error.message) setErrorMessage(error.message)
       console.log(error)
     }
+    setUpdatingComponent({
+      ...updatingComponent,
+      verifyProfile: false
+    })
   }
   const createProfile = async () => {
+    setUpdatingComponent({
+      ...updatingComponent,
+      addProfile: true
+    })
     try {
       const response = await api.post(`/v1/benchmark/instagram/ig-profile`, profileData)
       console.log('response.data', response.data)
@@ -72,9 +88,16 @@ export default function UserCardsPage() {
       if(error.message) setErrorMessage(error.message)
       console.log(error)
     }
+    setUpdatingComponent({
+      ...updatingComponent,
+      addProfile: false
+    })
   }
   const deleteProfile = async (profileAccount) => {
-    console.log('data', profileAccount)
+    setUpdatingComponent({
+      ...updatingComponent,
+      deleteProfile: true
+    })
     try {
       await api.delete(`/v1/benchmark/instagram/${profileAccount._id}`)
       setProfiles(profiles.filter(item => item._id !== profileAccount._id))
@@ -82,6 +105,10 @@ export default function UserCardsPage() {
       if(error.message) setErrorMessage(error.message)
       console.log(error)
     }
+    setUpdatingComponent({
+      ...updatingComponent,
+      deleteProfile: false
+    })
   }
 
   const handleUsername = (value) => {
@@ -161,7 +188,7 @@ export default function UserCardsPage() {
               >
               <LoadingButton fullWidth variant='outlined' color="error" onClick={() => setShowPreview(false)} >Cancelar</LoadingButton>
 
-              <LoadingButton fullWidth variant='contained' loading={updatingComponent} onClick={() => createProfile()}>Adicionar</LoadingButton>
+              <LoadingButton fullWidth variant='contained' loading={updatingComponent.addProfile} onClick={() => createProfile()}>Adicionar</LoadingButton>
 
               </Stack>
               </Box>
@@ -179,8 +206,8 @@ export default function UserCardsPage() {
                   }} helperText={errorMessage || 'Adicione o @perfil do Instagram'}
                 />
                 <Box m={2}>
-{console.log('username', username)}
-                <Button fullWidth disabled={!username} variant='contained' onClick={() => getProfile()}>Verificar perfil</Button>
+
+                <LoadingButton fullWidth disabled={!username} variant='contained' loading={updatingComponent.verifyProfile} onClick={() => getProfile()}>Verificar perfil</LoadingButton>
                 </Box>
 
               </Box>
@@ -213,9 +240,9 @@ export default function UserCardsPage() {
               direction="row"
               alignItems="flex-end"
               >
-              <LoadingButton fullWidth variant='outlined' color="error" onClick={() => deleteProfile(profile)} >Deletar Agora</LoadingButton>
+              <LoadingButton fullWidth variant='outlined' color="error" loading={updatingComponent.deleteProfile} onClick={() => deleteProfile(profile)} >Deletar Agora</LoadingButton>
 
-              <LoadingButton fullWidth variant='contained' loading={updatingComponent} onClick={() => setShowDeletarSection(null)}>Cancelar</LoadingButton>
+              <LoadingButton fullWidth variant='contained' onClick={() => setShowDeletarSection(null)}>Cancelar</LoadingButton>
 
               </Stack>
             </Box>

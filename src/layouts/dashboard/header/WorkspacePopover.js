@@ -69,7 +69,7 @@ export default function WorkspacePopover() {
       </Box>) : (<Box display='flex' flexDirection='row' alignContent='center' alignItems='flex-end'>
         {/* <Typography sx={{ color: 'gray', fontSize: '12px'}} m={0} padding={0}>Área de trabalho: </Typography> */}
         <NextLink href={PATH_DASHBOARD.business.new} passHref>
-        Criar novo negócio
+        Criar negócio
             </NextLink>
       </Box>)
         
@@ -99,7 +99,7 @@ export default function WorkspacePopover() {
               {option.businessId.name}
             </MenuItem>
           ))}
-          <Divider />
+          {/* <Divider />
           
 
             <NextLink href={PATH_DASHBOARD.business.new} passHref>
@@ -108,13 +108,13 @@ export default function WorkspacePopover() {
               selected={false}
               onClick={() => handleClose()}
             >
-              {/* <Image disabledEffect alt={option.label} src={option.icon} sx={{ width: 28, mr: 2 }} /> */}
+              
 
               <AddCircleIcon/>
               Criar novo negócio
 
             </MenuItem>
-            </NextLink>
+            </NextLink> */}
         </Stack>
       </MenuPopover>
     </>
