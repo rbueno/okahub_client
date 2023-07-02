@@ -60,9 +60,9 @@ import useCopyToClipboard from '../../../../../hooks/useCopyToClipboard'
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'rank', label: 'Ranking', align: 'left' },
+  { id: 'rank', label: 'Rank', align: 'left' },
   { id: 'midia', label: 'Mídia', align: 'left' },
-  { id: 'score', label: 'Taxa de engajamento', align: 'left' },
+  { id: 'score', label: 'Engajamento', align: 'left' },
   { id: 'link', label: 'Post', align: 'left' },
   // { id: 'analytic' },
   // { id: 'email', label: 'Criado em', align: 'left' },
@@ -371,7 +371,13 @@ export default function UserListPage() {
           
 
 
-          <Box m={4}>
+          
+
+
+          </Card>
+        </Box>
+
+        <Box mb={2}>
           <Card>
           <CardHeader avatar={<NotesIcon/>} title='Inspiração de post original' subheader="Sugestão baseada nos insight dos posts mais engajados."  />
           <CardContent>
@@ -412,10 +418,6 @@ export default function UserListPage() {
                 }
                   
           </CardContent>
-          </Card>
-        </Box>
-
-
           </Card>
         </Box>
         
