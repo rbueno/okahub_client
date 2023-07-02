@@ -304,6 +304,19 @@ export default function UserListPage() {
         </Card>
         </Box>
 
+        <Divider variant="middle" />
+
+        <Box sx={{ mb: 2 }}>
+          <Stack direction="row" alignItems="center">
+            <Box sx={{ flexGrow: 1 }}>
+        
+            <Typography variant="h4" gutterBottom>
+            Análise e geração de conteúdo com Inteligência Artificial
+            </Typography>
+            </Box>
+          </Stack>
+        </Box>
+
         <Box mb={2}>
           <Card>
           <CardHeader
@@ -314,7 +327,7 @@ export default function UserListPage() {
             //       Gerar nova Análise
             //   </Button>
             // }
-           avatar={<TipsAndUpdatesIcon />} title='Análise com Inteligência Artificial' subheader="Insights e feedbacks sobre os posts com maior engajamento." />
+           avatar={<TipsAndUpdatesIcon />} title='Análise de conteúdo' subheader="Insights e feedbacks sobre os posts com maior engajamento." />
           {/* <Box>
             <TipsAndUpdatesIcon />
             <Typography> teste</Typography>
