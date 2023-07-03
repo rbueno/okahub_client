@@ -25,7 +25,7 @@ export default function RegisterPage() {
       </Head>
 
       <GuestGuard>
-        <Register phoneNumber={phoneNumber}/>
+        <Register phoneNumberFromQuery={phoneNumber}/>
       </GuestGuard>
     </>
   );

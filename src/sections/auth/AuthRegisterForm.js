@@ -12,14 +12,14 @@ import { useAuthContext } from '../../auth/useAuthContext';
 // components
 import Iconify from '../../components/iconify';
 import FormProvider, { RHFTextField } from '../../components/hook-form';
-import Textfields from '../_examples/mui/Textfields';
+
 
 // ----------------------------------------------------------------------
 
 AuthRegisterForm.propTypes = {
-  phoneNumber: PropTypes.string
+  phoneNumberFromQuery: PropTypes.string
 }
-export default function AuthRegisterForm({ phoneNumber }) {
+export default function AuthRegisterForm({ phoneNumberFromQuery }) {
   const { register } = useAuthContext();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +29,7 @@ export default function AuthRegisterForm({ phoneNumber }) {
     lastName: Yup.string().required('Sobrenome é obrigatório'),
     email: Yup.string().email('Email must be a valid email address').required('Email é obrigatório'),
     emailConfirm: Yup.string().oneOf([Yup.ref('email')], 'Email precisa ser igual').required('Confirmação de email é obrigatório'),
+    phoneNumber: phoneNumberFromQuery ? Yup.string() : Yup.string().required('Telefone é obrigatório').min(8),
     password: Yup.string().required('Senha é obrigatória'),
     passwordConfirm: Yup.string().oneOf([Yup.ref('password')], 'Senha precisa ser igual').required('Confirmação de senha é obrigatório')
   });
@@ -38,6 +39,7 @@ export default function AuthRegisterForm({ phoneNumber }) {
     lastName: '',
     email: '',
     emailConfirm: '',
+    phoneNumber: phoneNumberFromQuery || '',
     password: '',
     passwordConfirm: '',
   };
@@ -55,9 +57,10 @@ export default function AuthRegisterForm({ phoneNumber }) {
   } = methods;
 
   const onSubmit = async (data) => {
+    const phone = data.phoneNumber || phoneNumberFromQuery
     try {
       if (register) {
-        await register(data.email, data.password, data.firstName, data.lastName, phoneNumber);
+        await register(data.email, data.password, data.firstName, data.lastName, phone, phoneNumberFromQuery);
       }
     } catch (error) {
       console.error(error);
@@ -83,6 +86,17 @@ export default function AuthRegisterForm({ phoneNumber }) {
 
         <RHFTextField name="email" label="Email" />
         <RHFTextField name="emailConfirm" label="Repetir email" />
+        {
+          phoneNumberFromQuery ? <TextField
+          disabled
+          value={phoneNumberFromQuery}
+          /> : <RHFTextField
+            name="phoneNumber" 
+            label="Telefone" 
+            placeholder="Ex.: 11943128360"
+            type="number"
+            />
+        }
 
         <RHFTextField
           name="password"
@@ -113,14 +127,6 @@ export default function AuthRegisterForm({ phoneNumber }) {
             ),
           }}
         />
-        {
-          phoneNumber && <TextField
-          disabled
-          value={phoneNumber}
-          />
-        }
-
-        
 
         <LoadingButton
           fullWidth
