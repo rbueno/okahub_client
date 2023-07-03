@@ -34,6 +34,12 @@ import { Provider as ReduxProvider } from 'react-redux';
 // @mui
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+
+import { useEffect } from 'react'
+import Script from 'next/script'
+import { useRouter } from 'next/router'
+import * as fbq from '../lib/fpixel'
+
 // redux
 import { store } from '../redux/store';
 // utils
@@ -68,12 +74,51 @@ MyApp.propTypes = {
 };
 
 export default function MyApp(props) {
+  const router = useRouter()
+
   const { Component, pageProps, emotionCache = clientSideEmotionCache } = props;
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
+  useEffect(() => {
+    // This pageview only triggers the first time (it's important for Pixel to have real information)
+    fbq.pageview()
+
+    const handleRouteChange = () => {
+      fbq.pageview()
+    }
+
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [router.events])
+
   return (
-    <CacheProvider value={emotionCache}>
+    <>
+
+
+
+
+    <Script
+        id="fb-pixel"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', ${fbq.FB_PIXEL_ID});
+          `,
+        }}
+      />
+
+<CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
@@ -101,5 +146,7 @@ export default function MyApp(props) {
         </ReduxProvider>
       </AuthProvider>
     </CacheProvider>
+    </>
+    
   );
 }
