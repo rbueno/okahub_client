@@ -35,7 +35,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
-import { useEffect } from 'react'
+import { useEffect, Fragment } from 'react'
 import Script from 'next/script'
 import { useRouter } from 'next/router'
 import * as fbq from '../lib/fpixel'
@@ -95,7 +95,7 @@ export default function MyApp(props) {
   }, [router.events])
 
   return (
-    <>
+    <Fragment>
 
 
 
@@ -146,7 +146,7 @@ export default function MyApp(props) {
         </ReduxProvider>
       </AuthProvider>
     </CacheProvider>
-    </>
+    </Fragment>
     
   );
 }
