@@ -12,6 +12,7 @@ import { useAuthContext } from '../../auth/useAuthContext';
 // components
 import Iconify from '../../components/iconify';
 import FormProvider, { RHFTextField } from '../../components/hook-form';
+import * as fbq from '../../lib/fpixel'
 
 
 // ----------------------------------------------------------------------
@@ -61,6 +62,7 @@ export default function AuthRegisterForm({ phoneNumberFromQuery }) {
     try {
       if (register) {
         await register(data.email, data.password, data.firstName, data.lastName, phone, phoneNumberFromQuery);
+        fbq.event('CompleteRegistration')
       }
     } catch (error) {
       console.error(error);
