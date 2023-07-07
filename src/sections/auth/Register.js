@@ -10,6 +10,7 @@ import { PATH_AUTH } from '../../routes/paths';
 //
 import AuthWithSocial from './AuthWithSocial';
 import AuthRegisterForm from './AuthRegisterForm';
+import AuthRegisterFormGuest from './AuthRegisterFormGuest';
 import Image from '../../components/image'
 
 // ----------------------------------------------------------------------
@@ -20,11 +21,19 @@ Register.propTypes = {
 export default function Register({ phoneNumberFromQuery }) {
   return (
       <LoginLayout title="Converta seguidores em leads">
-      <Box width={40} height={40} mb={4} >
-        <Image disabledEffect width='100px' height='100px' alt="rocket" src='/logo/okahub_logo.png' />
-        {/* <Typography>Okahub</Typography> */}
-      </Box>
+        {
+          phoneNumberFromQuery &&   <Box width={40} height={40} mb={4} >
+          <Image disabledEffect width='100px' height='100px' alt="rocket" src='/logo/okahub_logo.png' />
+        </Box>
+        }
+    
         <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
+
+        {
+          !phoneNumberFromQuery && <Image disabledEffect width='100px' height='100px' alt="rocket" src='/assets/benchmark/1.png' />
+        }
+
+        
           <Typography variant="h4">Crie uma conta grátis.</Typography>
 
           <Stack direction="row" spacing={0.5}>
@@ -36,7 +45,10 @@ export default function Register({ phoneNumberFromQuery }) {
           </Stack>
         </Stack>
 
-        <AuthRegisterForm phoneNumberFromQuery={phoneNumberFromQuery} />
+        {
+          phoneNumberFromQuery ? <AuthRegisterForm phoneNumberFromQuery={phoneNumberFromQuery} /> : <AuthRegisterFormGuest />
+        }
+        
 
         {/* <Typography
           component="div"

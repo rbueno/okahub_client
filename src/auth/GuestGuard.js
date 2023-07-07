@@ -22,7 +22,7 @@ export default function GuestGuard({ children }) {
 
   useEffect(() => {
     if (isAuthenticated) {
-      push(PATH_DASHBOARD.root);
+      push(PATH_DASHBOARD.benchmark.instagram.new);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
