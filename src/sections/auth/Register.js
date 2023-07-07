@@ -22,9 +22,12 @@ export default function Register({ phoneNumberFromQuery }) {
   return (
       <LoginLayout title="Converta seguidores em leads">
         {
-          phoneNumberFromQuery &&   <Box width={40} height={40} mb={4} >
+          phoneNumberFromQuery &&   <>
+          <Box width={40} height={40} mb={4} >
           <Image disabledEffect width='100px' height='100px' alt="rocket" src='/logo/okahub_logo.png' />
         </Box>
+        <Typography variant="h4">Crie uma conta grátis.</Typography>
+          </>
         }
     
         <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
@@ -34,7 +37,7 @@ export default function Register({ phoneNumberFromQuery }) {
         }
 
         
-          <Typography variant="h4">Crie uma conta grátis.</Typography>
+          
 
           <Stack direction="row" spacing={0.5}>
             <Typography variant="body2"> Já tem uma conta?</Typography>
