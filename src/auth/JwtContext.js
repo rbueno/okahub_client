@@ -181,7 +181,7 @@ export function AuthProvider({ children }) {
       lastName,
       phoneNumber,
       phoneNumberFromQuery,
-      guestUser
+      guestUser: false
     });
     const { accessToken, workspaceSession } = response.data;
     console.log('register workspaceSession ==>', workspaceSession)

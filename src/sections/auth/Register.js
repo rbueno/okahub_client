@@ -47,10 +47,11 @@ export default function Register({ phoneNumberFromQuery }) {
             </Link>
           </Stack>
         </Stack>
+        <AuthRegisterForm phoneNumberFromQuery={phoneNumberFromQuery} />
 
-        {
+        {/* {
           phoneNumberFromQuery ? <AuthRegisterForm phoneNumberFromQuery={phoneNumberFromQuery} /> : <AuthRegisterFormGuest />
-        }
+        } */}
         
 
         {/* <Typography
