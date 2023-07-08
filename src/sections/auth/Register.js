@@ -26,10 +26,11 @@ export default function Register({ phoneNumberFromQuery }) {
           <Box width={40} height={40} mb={4} >
           <Image disabledEffect width='100px' height='100px' alt="rocket" src='/logo/okahub_logo.png' />
         </Box>
-        <Typography variant="h4">Crie uma conta grátis.</Typography>
+        
           </>
         }
     
+    <Typography variant="h4">Crie uma conta grátis.</Typography>
         <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
 
         {
@@ -39,16 +40,16 @@ export default function Register({ phoneNumberFromQuery }) {
         
           
 
-          <Stack direction="row" spacing={0.5}>
             <Typography variant="body2"> Já tem uma conta?</Typography>
-
-            <Link component={NextLink} href={PATH_AUTH.login} variant="subtitle2">
-              Entrar
-            </Link>
-          </Stack>
+          
         </Stack>
         <AuthRegisterForm phoneNumberFromQuery={phoneNumberFromQuery} />
+        <Stack direction="row" spacing={0.5}>
 
+<Link component={NextLink} href={PATH_AUTH.login} variant="subtitle2">
+  Entrar
+</Link>
+</Stack>
         {/* {
           phoneNumberFromQuery ? <AuthRegisterForm phoneNumberFromQuery={phoneNumberFromQuery} /> : <AuthRegisterFormGuest />
         } */}
