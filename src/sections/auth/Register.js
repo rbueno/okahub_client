@@ -22,34 +22,35 @@ export default function Register({ phoneNumberFromQuery }) {
   return (
       <LoginLayout title="Converta seguidores em leads">
         {
-          phoneNumberFromQuery &&   <>
-          <Box width={40} height={40} mb={4} >
+          phoneNumberFromQuery && <Box width={40} height={40} mb={4} >
           <Image disabledEffect width='100px' height='100px' alt="rocket" src='/logo/okahub_logo.png' />
         </Box>
-        
-          </>
         }
     
-    <Typography variant="h4">Crie uma conta grátis.</Typography>
         <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
 
         {
           !phoneNumberFromQuery && <Image disabledEffect width='100px' height='100px' alt="rocket" src='/assets/benchmark/1.png' />
         }
 
-        
-          
-
-            <Typography variant="body2"> Já tem uma conta?</Typography>
-          
         </Stack>
-        <AuthRegisterForm phoneNumberFromQuery={phoneNumberFromQuery} />
-        <Stack direction="row" spacing={0.5}>
 
-<Link component={NextLink} href={PATH_AUTH.login} variant="subtitle2">
-  Entrar
-</Link>
-</Stack>
+        <Box mb={2}>
+        <Typography variant="h4">Crie uma conta grátis.</Typography>
+        </Box>
+
+
+        <Box mb={2}>
+        <AuthRegisterForm phoneNumberFromQuery={phoneNumberFromQuery} /> 
+        </Box>
+
+        <Stack direction="row" spacing={0.5}>
+            <Typography variant="body2"> Já tem uma conta?</Typography>
+
+            <Link component={NextLink} href={PATH_AUTH.login} variant="subtitle2">
+              Entrar
+            </Link>
+          </Stack>
         {/* {
           phoneNumberFromQuery ? <AuthRegisterForm phoneNumberFromQuery={phoneNumberFromQuery} /> : <AuthRegisterFormGuest />
         } */}
