@@ -49,7 +49,7 @@ export default class MyDocument extends Document {
           <meta name="keywords" content="react,material,kit,application,dashboard,admin,template" />
           <meta name="author" content="Okahub UI Kit" /> */}
 
-<script dangerouslySetInnerHTML={{
+            <script dangerouslySetInnerHTML={{
                   __html: `
                   (function(h,o,t,j,a,r){
                     h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
@@ -63,8 +63,18 @@ export default class MyDocument extends Document {
                 }}
                 />
 
- 
 
+              <script async src="https://www.googletagmanager.com/gtag/js?id=G-N4LLM520RV" />
+              <script dangerouslySetInnerHTML={{
+                                __html: `
+                                  window.dataLayer = window.dataLayer || [];
+                                  function gtag(){dataLayer.push(arguments);}
+                                  gtag('js', new Date());
+
+                                  gtag('config', 'G-N4LLM520RV');            
+                          `,
+                              }}
+                              />
         </Head>
 
         <body>
