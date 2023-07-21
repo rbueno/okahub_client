@@ -142,6 +142,10 @@ export default function UserCardsPage() {
         <Button href={PATH_DASHBOARD.benchmark.instagram.rank} startIcon={<ArrowBackIcon />}>Ranking</Button>
         </Box>
 
+        <Box m={2}>
+          <Typography>Adicione 3 ou mais contas de concorrentes para criar um ranking. Adicione também a sua própria conta para comparar.</Typography>
+        </Box>
+
         <Box
           m={2}
           gap={3}
@@ -233,7 +237,7 @@ export default function UserCardsPage() {
              {console.log('profile.profileDetail.profile_picture_url', profile.profileDetail.profile_picture_url)}
              {
               showDeletarSection !== profile.username ? <Box m={2}>
-              <Button fullWidth color='error' variant='outlined' onClick={() => setShowDeletarSection(profile.username)}>Deletar conta</Button>
+              <Button fullWidth variant='outlined' onClick={() => setShowDeletarSection(profile.username)}>Editar conta</Button>
           </Box> : <Box m={2}>
           <Stack
               spacing={2}
